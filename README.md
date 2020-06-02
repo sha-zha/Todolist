@@ -1,6 +1,7 @@
 # Todolist
 
--Amélie : Front-end des pages inscription et connexion
+Amélie : 
+* Front-end des pages inscription et connexion
 
 Laurent :
 * Objet accès base de données
@@ -8,8 +9,8 @@ Laurent :
 * Back taches
 
 Adeline : 
-*Front page liste 
-*Attribution des utilisateurs
+* Front page liste 
+* Attribution des utilisateurs
 
 Daryl : 
 * Front-end global page accueil
