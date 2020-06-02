@@ -8,5 +8,5 @@ Laurent :
 * Back taches
 
 Adeline : 
-*Front page liste 
-*Attribution des utilisateurs
+* Front page liste 
+* Attribution des utilisateurs
