@@ -6,3 +6,7 @@ Laurent :
 * Objet accès base de données
 * Base de données
 * Back taches
+
+Adeline : 
+*Front page liste 
+*Attribution des utilisateurs
