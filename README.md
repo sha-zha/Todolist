@@ -18,4 +18,4 @@ Daryl :
 
 Thomas:
 * Back de la page connexion
-* Back de la page inscription 
+* Back de la page inscription
