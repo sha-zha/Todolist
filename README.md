@@ -13,7 +13,7 @@ Adeline :
 * Attribution des utilisateurs
 
 Daryl : 
-* Front-end global page accueil
+* Front-end liste
 * Mise en relation avec backend (ajout / suppression / modification)
 
 Thomas:
