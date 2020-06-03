@@ -10,27 +10,24 @@ try{
 
 $pdo->query(
     "CREATE TABLE IF NOT EXISTS Users (
-    id_User INTEGER AUTO_INCREMENT NOT NULL, 
+    id_User INTEGER PRIMARY KEY AUTOINCREMENT,
     pseudo_User VARCHAR(100) NOT NULL, 
     email_User VARCHAR(255) NOT NULL, 
     pass_User VARCHAR(100) NOT NULL, 
-    token_User VARCHAR(100), 
-    PRIMARY KEY (id_User)
+    token_User VARCHAR(100)
     );"
 );
 
 $pdo->query(
     "CREATE TABLE IF NOT EXISTS Tasks (
-    id_Task INTEGER AUTO_INCREMENT NOT NULL, 
+    id_Task INTEGER PRIMARY KEY AUTOINCREMENT,
     task_Task VARCHAR(120) NOT NULL, 
     status_Task BOOLEAN DEFAULT 0, 
     id_User_attribuer INT(3) NOT NULL, 
     id_User_Creer INT(3) NOT NULL, 
     FOREIGN KEY (id_User_attribuer) REFERENCES User (id_User),
-    FOREIGN KEY (id_User_Creer) REFERENCES User (id_User),
-    PRIMARY KEY (id_Task)
+    FOREIGN KEY (id_User_Creer) REFERENCES User (id_User)
     );"
 );
-
 
 ?>
