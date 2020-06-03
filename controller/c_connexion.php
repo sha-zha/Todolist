@@ -5,7 +5,6 @@
         $stmt->execute(array('email_User' => $email));
         $stmt->execute(array('pass_User' => $mdp));
         $result = $stmt->fetchAll();
-        print_r($result);
 
         if(count($result) == 1){
             return true;
@@ -15,10 +14,21 @@
 
         return $result;
     }
+    //on attribue un token a l'utilisateur connecté
+    function attributionToken($pdo, $email, $token){
+        $stmt = $pdo->prepare("UPDATE users SET token_User = :token_User WHERE email_User = :email_User");
+        $result = $stmt->execute(array(
+            'email_User'         => $email,
+            'token_User'          => $token
+        ));
 
-    $test = verificationLogin($pdo, htmlspecialchars (htmlspecialchars($_POST['email'])), htmlspecialchars(md5($_POST['mdp'])) );
-    //si les logins sont bon, on initialise la variable session, sinon KO
+    }
+
+    $test = verificationLogin($pdo, htmlspecialchars($_POST['email']), htmlspecialchars(md5($_POST['mdp'])) );
+    //si les logins sont bon, on initialise la variable session et on lui attribue un token, sinon KO
     if($test){
+        $token = @crypt(htmlspecialchars($_POST['email']), "");
+        attributionToken($pdo, htmlspecialchars($_POST['email']), $token);
         $_SESSION["connecté"] = 'connecté';
         header('Location: index.php');
         exit();
