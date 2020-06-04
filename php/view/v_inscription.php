@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="container">
+        <div id="messageAction"><?php echo $msg;?></div>
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
@@ -47,5 +48,6 @@
             </div>
         </div>
     </div>
+    <script src="public/js/msg.js"></script>
 </body>
 </html>

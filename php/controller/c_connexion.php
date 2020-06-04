@@ -1,6 +1,7 @@
 <?php
     //on vérifie les logins dans la bdd
     require_once $dossier_model . 'm_users.php';
+    $msg = '';
 
     if(isset($_POST['email'],$_POST['mdp'])){
         $test = verificationLogin($pdo, htmlspecialchars (htmlspecialchars($_POST['email'])), htmlspecialchars(md5($_POST['mdp'])) );
@@ -12,7 +13,7 @@
             $view = 'v_tache.php';
         }else{
             $view = 'v_connexion.php';
-            $erreur = 'KO';
+            $msg = 'KO-conect';
         }
     }else{
         $view = 'v_connexion.php';

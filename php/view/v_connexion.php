@@ -3,11 +3,12 @@
 <head>
     <link rel="stylesheet" type="text/css" href="public/css/auth.css">
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/solar/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">    
     <title>To Do List Simplon</title>
 </head>
 <body>
     <div class="container">
+        <div id="messageAction"><?php echo $msg;?></div>
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
@@ -40,5 +41,7 @@
             </div>
         </div>
     </div>
+    <script src="public/js/msg.js"></script>
+
 </body>
 </html>
