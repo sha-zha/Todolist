@@ -186,6 +186,9 @@ function recupDataModal(tache) {
 
             // Fonctionnalités présent si on est le créateur de la tâche
             if (utilisateur == reponse.tache[0].maitre) {
+
+                listeUtilisateur.innerHTML = "";
+                
                 for (let j = 0; j < reponse.users.length; j++) {
 
                     // On crée les options du sélect
