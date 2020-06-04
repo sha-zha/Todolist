@@ -11,23 +11,23 @@ function message(mesg) {
         case "KO-conect":
             mesg.innerHTML = "Email ou mot de passe incorrect";
             mesg.classList.remove("invisible");
-            mesg.classList.remove('alert-success');
+            mesg.classList.remove('alert','alert-success');
             mesg.classList.add("mt-3");
-            mesg.classList.add('alert-danger');
+            mesg.classList.add('alert','alert-danger',);
             break;
         case "KO-insc":
             mesg.innerHTML = "Pseudo ou email existant";
             mesg.classList.remove("invisible");
-            mesg.classList.remove('alert-success');
+            mesg.classList.remove('alert','alert-success');
             mesg.classList.add("mt-3");
-            mesg.classList.add('alert-danger');
+            mesg.classList.add('alert','alert-danger');
             break;
         case "OK-insc":
-            mesg.innerHTML = "Inscription réussi ! Connecter vous avec votre email et mot de passe";
+            mesg.innerHTML = "Inscription réussie ! Connectez vous avec votre email et mot de passe";
             mesg.classList.remove("invisible");
-            mesg.classList.remove('alert-danger');
+            mesg.classList.remove('alert','alert-danger');
             mesg.classList.add("mt-3");
-            mesg.classList.add('alert-success');
+            mesg.classList.add('alert','alert-success');
             break;
 
         default:

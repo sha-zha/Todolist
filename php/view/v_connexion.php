@@ -8,11 +8,13 @@
 </head>
 <body>
     <div class="container">
-        <div id="messageAction"><?php echo $msg;?></div>
+        
         <div class="d-flex justify-content-center h-100">
             <div class="card">
                 <div class="card-header">
                     <h3>Authentification</h3>
+                   
+                    <div id="messageAction"><?php echo $msg;?></div> <!--affiche message-->
                 </div>
                 <div class="card-body">
                     <form action="index.php" method="POST">
