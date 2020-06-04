@@ -5,14 +5,14 @@ export { messageModalAdd, messageModalMod, messageInterface };
 "use strict";
 
 // Nécessaire à l'implémentation
-let tacheDescription = document.querySelector("#tacheDescription");
-let tacheFormAjout = document.querySelector("#tacheFormAjout");
-let tacheListe = document.querySelector("#tacheListe");
-let tacheModifier = document.querySelector('#tacheModifier');
-var messageModalAdd = document.querySelector('#warningModal');
-var messageModalMod = document.querySelector('#warningModalMod');
-var messageInterface = document.querySelector('#warning');
-var listeUtilisateur = document.querySelector('#listeUtilisateur');
+let tacheDescription    = document.querySelector("#tacheDescription");
+let tacheFormAjout      = document.querySelector("#tacheFormAjout");
+let tacheListe          = document.querySelector("#tacheListe");
+let tacheModifier       = document.querySelector('#tacheModifier');
+var messageModalAdd     = document.querySelector('#warningModal');
+var messageModalMod     = document.querySelector('#warningModalMod');
+var messageInterface    = document.querySelector('#warning');
+var listeUtilisateur    = document.querySelector('#listeUtilisateur');
 
 // Requete ajax
 let method;
@@ -39,9 +39,11 @@ window.onload = () =>{
         }
     }
 
+    // Récupérer les données présent en base de données
+    recupDonnees();
+
     // Fonction pour le rendu de notre JSON
     function renduJSON(json) {
-
         // On regarde si le json contient des données
         if (json != null) {
             tacheListe.innerHTML = "";
@@ -161,7 +163,6 @@ window.onload = () =>{
                 }
             }
         } else {
-
             // Message pour indiquer qu'il ny a pas de données
             tacheListe.innerHTML = "";
             let pasDonnee = document.createElement('div');
@@ -172,6 +173,7 @@ window.onload = () =>{
 
     // Fonction pour gérer le contenu du modal de manière dynamique
     function recupDataModal(tache) {
+
         method = "POST";
         data = `tache=${tache}&act=modal`;
         req.open(method, url, true);
@@ -200,39 +202,25 @@ window.onload = () =>{
 
                 // Fonctionnalités présent si on est le créateur de la tâche
                 if (utilisateur == reponse.tache[0].maitre) {
-
                     for (let j = 0; j < reponse.users.length; j++) {
 
                         // On réinitialise à chaque fois
                         listeUtilisateur.innerHTML = "";
 
                         // On crée les options du sélect
-                        var utilisateurs = document.createElement('option');
-                        utilisateurs.setAttribute('selected', true);
-                        utilisateurs.value = "";
-                        utilisateurs.textContent = "Choisir un utilisateur";
-                        listeUtilisateur.appendChild(utilisateurs);
-
+                        affichage.creerOptionPreSelect("", "Choisir un utilisateur");
+                
                         // Pour enlever une attribution
-                        utilisateurs = document.createElement('option');
-                        utilisateurs.value = "reinit";
-                        utilisateurs.textContent = "Remettre à zéro";
-                        listeUtilisateur.appendChild(utilisateurs);
-
+                        affichage.creerOption("reinit", "Remettre à zéro");
+     
                         if (reponse.tache[0].attribuer == reponse.users[j].idUser) {
-                            let utilisateurs = document.createElement('option');
-                            utilisateurs.setAttribute('selected', true);
-                            utilisateurs.value = reponse.users[j].idUser;
-                            utilisateurs.textContent = reponse.users[j].pseudo;
-                            listeUtilisateur.appendChild(utilisateurs);
+                            // Si notre utilisateur a déjà attribuer la tâche à quelqu'un
+                            affichage.creerOptionPreSelect(reponse.users[j].idUser, reponse.users[j].pseudo);
 
                         } else if (reponse.tache[0].maitre != reponse.users[j].idUser) {
-                            let utilisateurs = document.createElement('option');
-                            utilisateurs.value = reponse.users[j].idUser;
-                            utilisateurs.textContent = reponse.users[j].pseudo;
-                            listeUtilisateur.appendChild(utilisateurs);
+                            // Avoir les options des utilisateurs en enlevant dans la liste le créateur de la tache
+                            affichage.creerOption(reponse.users[j].idUser, reponse.users[j].pseudo);
                         }
-
                     }
                 } else {
                     labelModif.remove();
@@ -266,7 +254,6 @@ window.onload = () =>{
                         }
                     }
                 })
-
             }
         }
     }
@@ -294,6 +281,7 @@ window.onload = () =>{
                     affichage.messageInterfaceErreur(reponse.message);
                 }
 
+                // Supprimer le message inscrit sur l'interface après 5s
                 affichage.delaiMessageInterface();
             }
         }
@@ -334,7 +322,7 @@ window.onload = () =>{
 
         // Les données de la tâche
         let tache = tacheDescription.value;
-        
+
         // On envoie les données 
         data = `tache=${tache}&utilisateur=${utilisateur}&act=add`;
 
@@ -356,21 +344,9 @@ window.onload = () =>{
                     recupDonnees();
                     tacheFormAjout.reset();
                 }
-
             } else {
                 alert("Une erreur est survenue ! Veuillez reessayer plus tard !");
             }
         }
-        
     });
-
-    // // Supprimer les message erreur / success à la fermeture du modal
-    // let fermetureModalAjout = document.querySelector("#closeAdd");
-    // fermetureModalAjout.addEventListener("onmouseover", affichage.supprimerMessageModalAjouter);
-
-    // let fermetureModalMod = document.querySelector("#closeMod");
-    // fermetureModalMod.addEventListener("onmouseover", (affichage.supprimerMessageModalModif));
-
-    // get data
-    recupDonnees();
 }

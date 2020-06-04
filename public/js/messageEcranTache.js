@@ -19,7 +19,7 @@ export function messageModalAjoutSuccess(message){
         messageModalAdd.classList.remove("mb-3");
         messageModalAdd.classList.remove('alert-danger');
         messageModalAdd.classList.remove('alert-success');
-    }, 2000);
+    }, 3000);
 } 
 
 // Pour afficher un message d'échec sur le modal d'ajout
@@ -36,7 +36,7 @@ export function messageModalAjoutErreur(message) {
         messageModalAdd.classList.remove("mb-3");
         messageModalAdd.classList.remove('alert-danger');
         messageModalAdd.classList.remove('alert-success');
-    }, 2000);
+    }, 3000);
 }
 
 /* --------------------------------------------------------------- */
@@ -58,7 +58,7 @@ export function messageModalModSuccess(message) {
         messageModalMod.classList.remove("mb-3");
         messageModalMod.classList.remove('alert-danger');
         messageModalMod.classList.remove('alert-success');
-    }, 2000);
+    }, 3000);
 }
 
 // Pour afficher un message d'erreur sur le modal modifier
@@ -76,7 +76,23 @@ export function messageModalModErreur(message) {
         messageModalMod.classList.remove("mb-3");
         messageModalMod.classList.remove('alert-danger');
         messageModalMod.classList.remove('alert-success');
-    }, 2000);
+    }, 3000);
+}
+
+// Pour la création des options du modal modifier
+export function creerOptionPreSelect(valeur, text) {
+    let utilisateurs = document.createElement('option');
+    utilisateurs.setAttribute('selected', true);
+    utilisateurs.value = valeur;
+    utilisateurs.textContent = text;
+    listeUtilisateur.appendChild(utilisateurs);
+}
+
+export function creerOption(valeur, text) {
+    let utilisateurs = document.createElement('option');
+    utilisateurs.value = valeur;
+    utilisateurs.textContent = text;
+    listeUtilisateur.appendChild(utilisateurs);
 }
 
 /* --------------------------------------------------------------- */
