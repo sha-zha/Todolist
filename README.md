@@ -10,7 +10,8 @@ Laurent :
 
 Adeline : 
 * Front page liste 
-* Attribution des utilisateurs
+* Ajustement affichage message erreur page connexion et inscription 
+* déploiement heroku  
 
 
 Daryl : 
@@ -22,4 +23,4 @@ Thomas:
 * Back de la page inscription
 
 Lien heroku :
-https://todolist-simplon.herokuapp.com/
+https://simplon-todolist.herokuapp.com/
