@@ -14,7 +14,7 @@ var messageInterface = document.querySelector('#warning');
 
 // Requete ajax
 let method;
-let url = "../php/tache.php";
+let url = "php/tache.php";
 let req = new XMLHttpRequest();
 let data;
 
@@ -32,7 +32,7 @@ function renduJSON(json) {
 
             // Pour la création node de manière dynamique si on est celui qui a créer
             if (json[i].maitre == utilisateur) {
-                if (json[i].statut == 0 ) {
+                if (json[i].statut == 0) {
                     let tacheDiv = document.createElement("div");
                     tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded tache`;
                     tacheDiv.innerHTML = ` 
@@ -58,8 +58,8 @@ function renduJSON(json) {
                         </div>
                     </div>`;
                     tacheListe.appendChild(tacheDiv);
-                } 
-                
+                }
+
                 if (json[i].statut == 1) {
                     let tacheDiv = document.createElement("div");
                     tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded fini`;
@@ -77,7 +77,7 @@ function renduJSON(json) {
 
                 // Mettre à jour une tâche
                 let btnModifier = document.querySelector(`#modifier${i}`);
-                if(btnModifier != null){
+                if (btnModifier != null) {
                     btnModifier.addEventListener('click', (event) => {
                         listeUtilisateur.innerHTML = "";
                         recupDataModal(json[i].id);
@@ -85,18 +85,18 @@ function renduJSON(json) {
 
                     });
                 }
-            
+
                 // Supprimer une tâche
                 let btnSupprimer = document.querySelector(`#supprimer${i}`);
-                if(btnSupprimer != null){
+                if (btnSupprimer != null) {
                     btnSupprimer.addEventListener("click", (event) => {
                         if (confirm(`Voulez-vous vraiment supprimer la tache : ${json[i].tache}`)) {
                             supprimeTache(json[i].id);
                         }
                     });
                 }
-            } 
-            
+            }
+
             if (json[i].attribuer == utilisateur) {
 
                 // Pour la création node de manière dynamique si on a des tâches attribuer
@@ -116,8 +116,8 @@ function renduJSON(json) {
                     </div>`;
                     tacheListe.appendChild(tacheDiv);
 
-                } 
-                
+                }
+
                 if (json[i].statut == 1) {
                     let tacheDiv = document.createElement("div");
                     tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded fini`;
@@ -136,7 +136,7 @@ function renduJSON(json) {
 
             // Pour la validation que la tâche est terminé :
             let btnValidation = document.querySelector(`#validation${i}`);
-            if (btnValidation != null){
+            if (btnValidation != null) {
                 btnValidation.addEventListener('click', (event) => {
 
                     console.log("click");
@@ -146,7 +146,7 @@ function renduJSON(json) {
                 });
             }
         }
-    }else{
+    } else {
 
         // Message pour indiquer qu'il ny a pas de données
         tacheListe.innerHTML = "";
@@ -157,7 +157,7 @@ function renduJSON(json) {
 }
 
 // Fonction pour gérer le contenu du modal de manière dynamique
-function recupDataModal(tache){
+function recupDataModal(tache) {
     method = "POST";
     data = `tache=${tache}&act=modal`;
     req.open(method, url, true);
@@ -173,19 +173,19 @@ function recupDataModal(tache){
             tache2.value = reponse.tache[0].tache;
 
             // la gestion des titres
-            if (reponse.tache[0].tache.length > 20){
+            if (reponse.tache[0].tache.length > 20) {
                 let titre = reponse.tache[0].tache.slice(0, 20);
                 titreModal.textContent = `Tâche: ${titre} ...`;
-            }else{
+            } else {
                 let titre = reponse.tache[0].tache;
                 titreModal.textContent = `Tâche: ${titre}`;
             }
-            
+
             // Cacher ou afficher la possibilité d'attribuer des tâches
-            let labelModif  = document.querySelector('#labelModif');
+            let labelModif = document.querySelector('#labelModif');
 
             // Fonctionnalités présent si on est le créateur de la tâche
-            if(utilisateur == reponse.tache[0].maitre){
+            if (utilisateur == reponse.tache[0].maitre) {
                 for (let j = 0; j < reponse.users.length; j++) {
 
                     // On crée les options du sélect
@@ -209,18 +209,18 @@ function recupDataModal(tache){
                         listeUtilisateur.appendChild(utilisateurs);
                     }
                 }
-            }else{
+            } else {
                 labelModif.remove();
                 listeUtilisateur.remove();
             }
-         
+
             // Si on clique sur modifier à l'intérieur du modal
             let tacheModifier = document.querySelector('#tacheModifier');
-            tacheModifier.addEventListener('submit', event =>{
+            tacheModifier.addEventListener('submit', event => {
                 event.preventDefault();
                 method = "POST";
                 data = `utilisateur=${listeUtilisateur.value}&tache=${reponse.tache[0].id}&description=${tache2.value}&act=update`;
-                
+
                 req.open(method, url, true);
                 req.responseType = "json";
                 req.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
@@ -229,7 +229,7 @@ function recupDataModal(tache){
                 req.onload = () => {
                     if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
                         let reponse = req.response;
-                        
+
                         if (reponse.success) {
                             // Si on a une erreur
                             messageModalMod.innerHTML = "";
@@ -249,7 +249,7 @@ function recupDataModal(tache){
                             messageModalMod.classList.add("mb-3");
                             messageModalMod.classList.add('alert-danger');
                             messageModalMod.textContent = reponse.message;
-                            
+
                         }
                     }
                 }
@@ -260,14 +260,14 @@ function recupDataModal(tache){
 }
 
 // Fonction pour récupérer les données
-function recupDonnees(){
+function recupDonnees() {
     method = "GET";
     req.open(method, url, true);
     req.responseType = "json";
     req.send();
 
-    req.onload = () =>{
-        if(req.readyState === XMLHttpRequest.DONE && req.status === 200){
+    req.onload = () => {
+        if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
             let reponse = req.response;
             renduJSON(reponse);
         }
@@ -275,7 +275,7 @@ function recupDonnees(){
 }
 
 // Fonction pour supprimer une tâche
-function supprimeTache(tache){
+function supprimeTache(tache) {
     method = "POST";
     data = `tache=${tache}&act=delete`;
     req.open(method, url, true);
@@ -306,9 +306,9 @@ function supprimeTache(tache){
                 messageInterface.classList.add("mt-3");
                 messageInterface.classList.add('alert-danger');
                 messageInterface.textContent = reponse.message;
-                
+
             }
-            
+
             setTimeout(() => {
                 messageInterface.innerHTML = "";
                 messageInterface.classList.add("invisible");
@@ -321,7 +321,7 @@ function supprimeTache(tache){
 }
 
 //Fonction pour valider la tache
-function validationTache(tache){
+function validationTache(tache) {
     method = "POST";
     data = `tache=${tache}&act=validation`;
     req.open(method, url, true);
@@ -370,7 +370,7 @@ function validationTache(tache){
 recupDonnees();
 
 // Pour créer une tâche
-tacheFormAjout.addEventListener("submit", evnt =>{
+tacheFormAjout.addEventListener("submit", evnt => {
     evnt.preventDefault();
     method = "POST";
 
@@ -378,7 +378,7 @@ tacheFormAjout.addEventListener("submit", evnt =>{
     let tache = tacheDescription.value;
 
     // On vérifie qu'on a bien une description de la tâche
-    if(tache.length == 0){
+    if (tache.length == 0) {
 
         // Si on a une erreur
         messageModalAdd.innerHTML = "";
@@ -387,7 +387,7 @@ tacheFormAjout.addEventListener("submit", evnt =>{
         messageModalAdd.classList.add('alert-danger');
         messageModalAdd.textContent = "La description ne peut pas être vide";
 
-    }else{
+    } else {
 
         // cacher le message d'erreur
         messageModalAdd.innerHTML = "";
@@ -414,7 +414,7 @@ tacheFormAjout.addEventListener("submit", evnt =>{
                     messageModalAdd.classList.add("mb-3");
                     messageModalAdd.classList.add('alert-danger');
                     messageModalAdd.textContent = reponse.message;
-            
+
                 } else {
 
                     // Si on a pas d'erreur
@@ -437,7 +437,7 @@ tacheFormAjout.addEventListener("submit", evnt =>{
 
 // Supprimer les message erreur / success à la fermeture du modal
 let fermetureModalAjout = document.querySelector("#closeAdd");
-fermetureModalAjout.addEventListener("click", ()=>{
+fermetureModalAjout.addEventListener("click", () => {
     messageModalAdd.innerHTML = "";
     messageModalAdd.classList.add("invisible");
     messageModalAdd.classList.remove("mb-3");

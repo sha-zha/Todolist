@@ -37,7 +37,7 @@
     if($test){
         $token = @crypt(htmlspecialchars($_POST['email']), "");
         attributionToken($pdo, htmlspecialchars($_POST['email']), $token);
-        $id = recupererID($pdo, htmlspecialchars($_POST['email'])));
+        $id = recupererID($pdo, htmlspecialchars($_POST['email']));
         $_SESSION["id"] = $id[0]["id_User"];
         $_SESSION["connecté"] = 'connecté';
         header('Location: index.php');
@@ -46,6 +46,3 @@
         header('Location: index.php?retour=KO');
         exit();
     }
-
-
-?>
