@@ -14,7 +14,7 @@ var messageInterface = document.querySelector('#warning');
 
 // Requete ajax
 let method;
-let url = "../php/tache.php";
+let url = "php/tache.php";
 let req = new XMLHttpRequest();
 let data;
 
