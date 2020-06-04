@@ -20,8 +20,7 @@ if($testSession != 0){
 if(isset($_SESSION['connecté'])){
 
     // Pour récupérer les taches attribuées et créer par notre utilisateur
-    function lireDonnee()
-    {
+    function lireDonnee(){
         require "../db/db.php";
         global $utilisateurID;
 
@@ -44,44 +43,54 @@ if(isset($_SESSION['connecté'])){
     };
 
     // Fonction pour ajouter une tache
-    function ajouter()
-    {
-
+    function ajouter(){
         // les données utile
         $tache          = dataPurgatory($_POST['tache']);
         $idUtilisateur  = (int) dataPurgatory($_POST['utilisateur']);
 
-        // On vérifie que l'id de l'utilisateur est bien un int
-        if ($idUtilisateur != 0) {
-            $limiteCaractere = 120;
-            $nbCaractere = strlen($tache);
+        // pattern de regex afin d'éviter l'envoi d'un espace en tant que chaine de caractère,
+        // Ici il faut au moins avoir des chiffres et des lettres
+        $pattern = "/^[\s]*(?=.*[a-zA-Z0-9])/";
 
-            // On vérifie le nombre de caractère de la tache
-            if ($nbCaractere <= $limiteCaractere) {
-                require "../db/db.php";
-                $reqAjout = "INSERT INTO Tasks (task_Task, id_User_Creer) values (?,?)";
-                $ajout    = $pdo->prepare($reqAjout);
-                $ajout->execute(array($tache, $idUtilisateur));
+        // Si on à une description de renseigné
+        if (!empty($tache) && preg_match($pattern, $tache)) {
+            // On vérifie que l'id de l'utilisateur est bien un int
+            if ($idUtilisateur != 0) {
+                $limiteCaractere = 120;
+                $nbCaractere = strlen($tache);
 
-                $message = [
-                    'error' => false,
-                    'message' => 'La tâche a bien été ajouter !'
-                ];
-            } else {
-                $message = [
-                    'error' => true,
-                    'message' => 'Vous êtes limité à 120 caractères !'
-                ];
+                // On vérifie le nombre de caractère de la tache
+                if ($nbCaractere <= $limiteCaractere) {
+                    require "../db/db.php";
+                    $reqAjout = "INSERT INTO Tasks (task_Task, id_User_Creer) values (?,?)";
+                    $ajout    = $pdo->prepare($reqAjout);
+                    $ajout->execute(array($tache, $idUtilisateur));
+
+                    $message = [
+                        'error' => false,
+                        'message' => 'La tâche a bien été ajouter !'
+                    ];
+                } else {
+                    $message = [
+                        'error' => true,
+                        'message' => 'Vous êtes limité à 120 caractères !'
+                    ];
+                }
             }
+        } else {
+            $message = [
+                'error' => true,
+                'message' => 'Votre tâche doit contenir au minimum un chiffre ou une lettre !'
+            ];
         }
+
         echo json_encode($message);
         $pdo = null;
     };
 
 
     // Fonction pour gérer le contenu dynamique du modal
-    function modalData()
-    {
+    function modalData(){
         require "../db/db.php";
         global $utilisateurID;
 
@@ -124,8 +133,7 @@ if(isset($_SESSION['connecté'])){
 
 
     // Fonction pour mettre à jour une tache
-    function mettreAJour()
-    {
+    function mettreAJour(){
         require "../db/db.php";
 
         // Les données utiles
@@ -133,45 +141,18 @@ if(isset($_SESSION['connecté'])){
         $idTache        = (int) dataPurgatory($_POST['tache']);
         $description    = dataPurgatory($_POST['description']);
 
-        // Réinitialiser l'attribution 
-        if ($idUtilisateur ==  "reinit") {
-            $reqMettreAJour = "UPDATE Tasks SET id_User_attribuer = ? WHERE id_Task = ?";
-            $mettreAJour = $pdo->prepare($reqMettreAJour);
-            $mettreAJour->execute(array(null, $idTache));
+        // pattern de regex afin d'éviter l'envoi d'un espace en tant que chaine de caractère,
+        // Ici il faut au moins avoir des chiffres et des lettres
+        $pattern = "/^[\s]*(?=.*[a-zA-Z0-9])/";
 
-            $message = [
-                'success' => true,
-                'message' => 'La tâche a bien été modifié !'
-            ];
-        } else {
+        // Si on à une description de renseigné
+        if (!empty($description) && preg_match($pattern, $description)) {
+
+            // On converti l'id en int
             $idUtilisateur = (int) $idUtilisateur;
-        }
-
-        // Vérification que l'utilisateur veut attribuer à quelqu'un 
-        if ($idUtilisateur != 0) {
-            // On vérifie que la description n'est pas vide
-            if (!empty($description)) {
-                $reqMettreAJour = "UPDATE Tasks SET task_Task = ? WHERE id_Task = ?";
-                $mettreAJour = $pdo->prepare($reqMettreAJour);
-                $mettreAJour->execute(array($description, $idTache));
-
-                $message = [
-                    'success' => true,
-                    'message' => 'La tâche a bien été modifié !'
-                ];
-            } else {
-                $message = [
-                    'success' => false,
-                    'message' => 'La description de la tâche ne peut pas être vide !'
-                ];
-            }
-        }
-
-        if ($idTache != 0 && $idUtilisateur != 0) {
 
             // Dans le cas où nous avons un id utilisateur / tache -> donc une attribution
-            // On vérifie que la description n'est pas vide
-            if (!empty($description)) {
+            if (!empty($description) && !empty($idUtilisateur) && $idUtilisateur != 0) {
                 $reqMettreAJour = "UPDATE Tasks SET task_Task = ? , id_User_attribuer = ? WHERE id_Task = ?";
                 $mettreAJour = $pdo->prepare($reqMettreAJour);
                 $mettreAJour->execute(array($description, $idUtilisateur, $idTache));
@@ -186,17 +167,44 @@ if(isset($_SESSION['connecté'])){
                     'message' => 'La description de la tâche ne peut pas être vide !'
                 ];
             }
+        
+            // On met uniquement à jour la tache sans attribuer à un utilisateur
+            if ($idUtilisateur == 0) {
+                $reqMettreAJour = "UPDATE Tasks SET task_Task = ? WHERE id_Task = ?";
+                $mettreAJour = $pdo->prepare($reqMettreAJour);
+                $mettreAJour->execute(array($description, $idTache));
+
+                $message = [
+                    'success' => true,
+                    'message' => 'La tâche a bien été modifié !'
+                ];
+            }
+        } else {
+            $message = [
+                'success' => false,
+                'message' => 'Votre tâche doit contenir au minimum un chiffre ou une lettre !'
+            ];
+        }
+
+        // Réinitialiser l'attribution 
+        if ($idUtilisateur ==  "reinit" && !empty($description)) {
+            $reqMettreAJour = "UPDATE Tasks SET id_User_attribuer = ? WHERE id_Task = ?";
+            $mettreAJour = $pdo->prepare($reqMettreAJour);
+            $mettreAJour->execute(array(null, $idTache));
+
+            $message = [
+                'success' => true,
+                'message' => 'La tâche a bien été modifié !'
+            ];
         }
 
         echo json_encode($message);
         $pdo = null;
-    };
-
-
+        
+    }
+        
     // On supprime la tache 
-    function supprimer()
-    {
-
+    function supprimer(){
         require "../db/db.php";
         global $utilisateurID;
         $idTache = (int) dataPurgatory($_POST['tache']);

@@ -44,7 +44,7 @@ if (!isset($_SESSION['connecté'])) {
         <div id="warning" class="alert w-50 mx-auto text-center"></div>
 
         <!-- Liste -->
-        <div class="container-fluid mt-3">
+        <div class="container-fluid my-5">
             <div class="row no-gutters">
                 <div class="col-lg-8 col-sm-10 col-12 mx-auto">
                     <div class="card bg-info">
@@ -129,8 +129,7 @@ if (!isset($_SESSION['connecté'])) {
             <!--fin modal content -->
         </div>
     </div>
-
-    <script src="public/js/taches.js"></script>
+    <script type="module" src="public/js/taches.js"></script>
 </body>
 
 </html>
