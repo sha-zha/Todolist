@@ -42,7 +42,7 @@
 
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  
-	.card-header, .btnAjouter, .modal-title{
+	.card-header, .btnAjouter, .modal-title, #warningModal, #warning, #warningModalMod{
 		font-size: calc(0.9em + 2vw) !important;
 	}
 	p, .fas, .fa, label, input, select, #closeMod, #closeAdd{
@@ -52,7 +52,7 @@
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) { 
-	.card-header, .btnAjouter,.modal-title{
+	.card-header, .btnAjouter,.modal-title, #warningModal, #warning, #warningModalMod{
 		font-size: calc(0.7em + 2vw) !important;
 	}
 	p, .fas, .fa, label, input, select, #closeMod, #closeAdd{
@@ -62,7 +62,7 @@
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) { 
-	.card-header, .btnAjouter,.modal-title{
+	.card-header, .btnAjouter,.modal-title, #warningModal, #warning, #warningModalMod{
 		font-size: calc(0.5em + 1vw) !important;
 	}
 	p, .fas, .fa, label, input, select, #closeMod, #closeAdd{
