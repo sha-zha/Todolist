@@ -1,0 +1,48 @@
+# Disable directory browsing 
+Options All -Indexes
+ServerSignature Off
+Options +FollowSymLinks
+AddDefaultCharset UTF-8
+
+#Protection XSS, clickJacking et Mime-Type
+<ifModule mod_headers.c>
+Header set X-XSS-Protection "1; mode=block"
+Header always append X-Frame-Options SAMEORIGIN
+Header set X-Content-Type-Options: "nosniff”
+</ifModule>
+
+# Deny access to .htaccess
+<Files .htaccess>
+Order allow,deny
+Deny from all
+</Files>
+
+# Deny access to files with extensions .php
+<FilesMatch "\.php$">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
+# Allow access to index.php
+<Files index.php>
+Order allow,deny
+Allow from all
+</Files>
+
+# Deny access to .lock
+<Files *.lock>
+Order allow,deny
+Deny from all
+</Files>
+
+# Deny access to .md
+<Files *.md>
+Order allow,deny
+Deny from all
+</Files>
+
+# Allow access to tache.php
+<Files tache.php>
+Order allow,deny
+Allow from all
+</Files>
