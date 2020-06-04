@@ -1,15 +1,16 @@
 /* Fluid Typography */
-@media (min-width: 768px) {
-    :html {
-      font-size: calc(0.875rem + ((1vw - 7.68px) * 0.6944));
+@media (min-width: 320px) {
+    html {
+      font-size: calc(0.9375rem + ((1vw - 3.2px) * 0.1875));
       min-height: 0vw;
     }
 }
-@media (min-width: 1920px) {
-    :html {
-      font-size: 22px;
+  @media (min-width: 1920px) {
+    html {
+      font-size: 18px;
     }
 }
+
 html,body{
     height: 100%;
 }

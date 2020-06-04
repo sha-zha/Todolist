@@ -192,10 +192,16 @@ function recupDataModal(tache) {
                     listeUtilisateur.innerHTML = "";
 
                     // On crée les options du sélect
-                    let utilisateurs = document.createElement('option');
+                    var utilisateurs = document.createElement('option');
                     utilisateurs.setAttribute('selected', true);
                     utilisateurs.value = "";
                     utilisateurs.textContent = "Choisir un utilisateur";
+                    listeUtilisateur.appendChild(utilisateurs);
+
+                    // Pour enlever une attribution
+                    utilisateurs = document.createElement('option');
+                    utilisateurs.value = "reinit";
+                    utilisateurs.textContent = "Remettre à zéro";
                     listeUtilisateur.appendChild(utilisateurs);
 
                     if (reponse.tache[0].attribuer == reponse.users[j].idUser) {

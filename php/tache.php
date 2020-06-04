@@ -123,12 +123,26 @@ function mettreAJour(){
     require "../db/db.php";
 
     // Les données utiles
-    $idUtilisateur  = (int) dataPurgatory($_POST['utilisateur']);
+    $idUtilisateur  = dataPurgatory($_POST['utilisateur']);
     $idTache        = (int) dataPurgatory($_POST['tache']);
     $description    = dataPurgatory($_POST['description']);
-    
+
+    // Réinitialiser l'attribution 
+    if ($idUtilisateur ==  "reinit") {
+        $reqMettreAJour = "UPDATE Tasks SET id_User_attribuer = ? WHERE id_Task = ?";
+        $mettreAJour = $pdo->prepare($reqMettreAJour);
+        $mettreAJour->execute(array(null, $idTache));
+
+        $message = [
+            'success' => true,
+            'message' => 'La tâche a bien été modifié !'
+        ];
+    } else {
+        $idUtilisateur = (int) $idUtilisateur;
+    }
+
     // Vérification que l'utilisateur veut attribuer à quelqu'un 
-    if($idUtilisateur == 0){
+    if($idUtilisateur != 0){
         // On vérifie que la description n'est pas vide
         if (!empty($description)) {
             $reqMettreAJour = "UPDATE Tasks SET task_Task = ? WHERE id_Task = ?";
@@ -145,8 +159,9 @@ function mettreAJour(){
                 'message' => 'La description de la tâche ne peut pas être vide !'
             ];
         }
-
-    } else if ($idTache != 0 && $idUtilisateur != 0) {
+    } 
+    
+    if ($idTache != 0 && $idUtilisateur != 0) {
 
         // Dans le cas où nous avons un id utilisateur / tache -> donc une attribution
         // On vérifie que la description n'est pas vide
