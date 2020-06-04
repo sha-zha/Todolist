@@ -1,0 +1,44 @@
+<?php
+    //on vérifie les logins dans la bdd
+    require_once $dossier_model . 'm_users.php';
+
+    if(isset($_POST['email'],$_POST['mdp'])){
+        $test = verificationLogin($pdo, htmlspecialchars (htmlspecialchars($_POST['email'])), htmlspecialchars(md5($_POST['mdp'])) );
+        //si les logins sont bon, on initialise la variable session, sinon KO
+        if($test){
+            $token = @crypt(htmlspecialchars($_POST['email']), "");
+            attributionToken($pdo, htmlspecialchars($_POST['email']), $token);
+            $_SESSION["connecté"] = true;
+            $view = 'v_tache.php';
+        }else{
+            $view = 'v_connexion.php';
+            $erreur = 'KO';
+        }
+    }else{
+        $view = 'v_connexion.php';
+    }
+
+    function verificationLogin($pdo, $email, $mdp){
+        $result = count_user_by_email_pass($pdo, $email, $mdp);
+
+        if(count($result) == 1){
+            return true;
+        }else{
+            return false;
+        }
+
+        return $result;
+    }
+
+    //on attribue un token a l'utilisateur connecté
+    function attributionToken($pdo, $email, $token){
+        update_token_user($pdo, $email, $token);
+
+    }
+
+    
+
+    
+
+
+?>

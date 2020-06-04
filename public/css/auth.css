@@ -1,0 +1,77 @@
+/* Fluid Typography */
+@media (min-width: 768px) {
+    :html {
+      font-size: calc(0.875rem + ((1vw - 7.68px) * 0.6944));
+      min-height: 0vw;
+    }
+}
+@media (min-width: 1920px) {
+    :html {
+      font-size: 22px;
+    }
+}
+html,body{
+    height: 100%;
+}
+.container{
+    height: 100%;
+    align-content: center;
+}
+.card{
+    height: 370px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: #479CD9!important;
+ }
+.card-header{
+    background-color: #479CD9!important;
+    border-bottom: none!important
+}
+.card-header h3{
+    color: #FFF;
+    text-align: center;
+}
+.card-footer{
+    background-color: #479CD9!important;
+    border-top: none!important;
+}
+.card-footer h3{
+    color: #FFF;
+    text-align: center;
+    border-color: #479CD9!important;
+}
+.input-group-prepend span{
+    width: 50px;
+    background-color: #FFF!important;
+    color: black;
+    border:0 !important;
+}
+.form-group{
+    margin-bottom: none!important;
+}
+.form-control{
+    background-color: #FFF!important;
+}
+.input-group-text{
+    color: #479CD9!important;
+    justify-content: center;
+}
+input:focus{
+    outline: 0 0 0 0  !important;
+    box-shadow: 0 0 0 0 !important;
+}
+.login_btn{
+    color: #479CD9!important;
+    background-color: #FFF!important;
+    width: 150px;
+    margin-top: 20px;
+    border-radius: 150px!important;
+}
+.links{
+    color: #FFF!important;
+}
+.links a{
+    margin-left: 4px;
+    color: #FFF!important;
+}

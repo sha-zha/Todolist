@@ -1,0 +1,27 @@
+/*design des taches */
+
+.tache{
+	border: 1px solid  #479CD9!important; 
+	background-color:  #ffff!important;
+}
+
+.trash-color{
+	color:#FF0000;
+}
+
+.bg-color{
+	background-color:  #EEEEEE!important;
+}
+
+.form-control {
+	background-color: #fff!important;
+}
+
+.rond{
+	border-radius: 2em;
+}
+
+.fin{
+	border: 1px solid  #2AA198!important; 
+	background-color:  #ffff!important;
+}
