@@ -46,7 +46,7 @@ session_start();
         <div id="warning" class="alert w-50 mx-auto text-center"></div>
 
         <!-- Liste -->
-        <div class="container mt-3">
+        <div class="container my-5">
             <div class="row">
                 <div class="col-sm-8 mx-auto">
                     <div class="card bg-info">

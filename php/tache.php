@@ -79,6 +79,8 @@ function ajouter(){
 // Fonction pour gérer le contenu dynamique du modal
 function modalData(){
     require "../db/db.php";
+    global $utilisateur1;
+
     $idTache = (int) dataPurgatory($_POST['tache']);
 
     // On vérifie que l'id est bien un int
@@ -86,8 +88,8 @@ function modalData(){
         $reqTache = $pdo->prepare("SELECT * FROM Tasks WHERE id_Task = ?");
         $reqTache->execute(array($idTache));
 
-        $reqUser = $pdo->prepare("SELECT * FROM Users");
-        $reqUser->execute();
+        $reqUser = $pdo->prepare("SELECT * FROM Users WHERE NOT id_User = ?");
+        $reqUser->execute(array($utilisateur1));
 
         while($tache = $reqTache->fetch()){
             $donneesTache[] = [
@@ -125,28 +127,49 @@ function mettreAJour(){
     $idUtilisateur  = (int) dataPurgatory($_POST['utilisateur']);
     $idTache        = (int) dataPurgatory($_POST['tache']);
     $description    = dataPurgatory($_POST['description']);
-
-    // On vérifie que id de l'utilisateur et de la tâche soit bien un int et différent de 0
-    if($idTache != 0 && $idUtilisateur != 0){
-
+    
+    // Vérification que l'utilisateur veut attribuer à quelqu'un 
+    if($idUtilisateur == 0){
         // On vérifie que la description n'est pas vide
-        if(!empty($description)){
+        if (!empty($description)) {
+            $reqMettreAJour = "UPDATE Tasks SET task_Task = ? WHERE id_Task = ?";
+            $mettreAJour = $pdo->prepare($reqMettreAJour);
+            $mettreAJour->execute(array($description, $idTache));
+
+            $message = [
+                'success' => true,
+                'message' => 'La tâche a bien été modifié !'
+            ];
+        } else {
+            $message = [
+                'success' => false,
+                'message' => 'La description de la tâche ne peut pas être vide !'
+            ];
+        }
+
+    } else if ($idTache != 0 && $idUtilisateur != 0) {
+
+        // Dans le cas où nous avons un id utilisateur / tache -> donc une attribution
+        // On vérifie que la description n'est pas vide
+        if (!empty($description)) {
             $reqMettreAJour = "UPDATE Tasks SET task_Task = ? , id_User_attribuer = ? WHERE id_Task = ?";
             $mettreAJour = $pdo->prepare($reqMettreAJour);
             $mettreAJour->execute(array($description, $idUtilisateur, $idTache));
 
             $message = [
                 'success' => true,
-                'message' => 'La tâche a bien été modifier !'
+                'message' => 'La tâche a bien été attribuer !'
             ];
-        }else{
+
+        } else {
             $message = [
                 'success' => false,
                 'message' => 'La description de la tâche ne peut pas être vide !'
             ];
         }
-        echo json_encode($message);
     }
+
+    echo json_encode($message);
     $pdo = null;
 };
 

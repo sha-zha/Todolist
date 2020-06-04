@@ -32,19 +32,29 @@ function renduJSON(json) {
 
             // Pour la création node de manière dynamique si on est celui qui a créer
             if (json[i].maitre == utilisateur) {
-                if (json[i].statut == 0) {
+                if (json[i].statut == 0 ) {
                     let tacheDiv = document.createElement("div");
                     tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded tache`;
                     tacheDiv.innerHTML = ` 
-                    <div class="row">
+                    <div class="row pr-3">
                         <div class="col">
-                            <p id="validation${i}" class="mb-1">${json[i].tache}</p>
+                            <p class="mb-1">${json[i].tache}</p>
                         </div>
-                        <div class="col-1">
-                            <i class="fas fa-pencil-alt text-info" id="modifier${i}"></i>
+                        <div class="col-1 d-flex align-items-center">
+                        <button id="modifier${i}" class="btn btn-outline-info" data-toggle="tooltip" data-placement="top" title="Modifier">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                            
                         </div>
-                        <div class="col-1">
-                            <i class="fas fa-trash-alt trash-color" id="supprimer${i}"></i>
+                        <div class="col-1 d-flex align-items-center">
+                            <button id="validation${i}" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Valider">
+                                <i class="fa fa-calendar-check-o"></i>
+                            </button>
+                        </div>
+                        <div class="col-1 d-flex align-items-center">
+                            <button id="supprimer${i}" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                                 <i class="fas fa-trash-alt"></i>
+                            </button>
                         </div>
                     </div>`;
                     tacheListe.appendChild(tacheDiv);
@@ -54,11 +64,11 @@ function renduJSON(json) {
                     let tacheDiv = document.createElement("div");
                     tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded fini`;
                     tacheDiv.innerHTML = ` 
-                    <div class="row">
+                    <div class="row pr-3">
                         <div class="col">
                             <p class="mb-1">${json[i].tache}</p>
                         </div>
-                        <div class="col-1">
+                        <div class="col-1 d-flex align-items-center">
                             <i class="fa fa-check-circle trash-color"></i>
                         </div>
                     </div>`;
@@ -69,7 +79,6 @@ function renduJSON(json) {
                 let btnModifier = document.querySelector(`#modifier${i}`);
                 if(btnModifier != null){
                     btnModifier.addEventListener('click', (event) => {
-                        event.stopPropagation();
                         listeUtilisateur.innerHTML = "";
                         recupDataModal(json[i].id);
                         $('#modalMod').modal('toggle');
@@ -81,7 +90,6 @@ function renduJSON(json) {
                 let btnSupprimer = document.querySelector(`#supprimer${i}`);
                 if(btnSupprimer != null){
                     btnSupprimer.addEventListener("click", (event) => {
-                        event.stopPropagation();
                         if (confirm(`Voulez-vous vraiment supprimer la tache : ${json[i].tache}`)) {
                             supprimeTache(json[i].id);
                         }
@@ -96,9 +104,14 @@ function renduJSON(json) {
                     let tacheDiv = document.createElement("div");
                     tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded tache`;
                     tacheDiv.innerHTML = ` 
-                    <div class="row">
+                    <div class="row pr-3">
                         <div class="col">
-                            <p id="validation${i}" class="mb-1">${json[i].tache}</p>
+                            <p class="mb-1">${json[i].tache}</p>
+                        </div>
+                        <div class="col-1 d-flex align-items-center">
+                            <button id="validation${i}" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Valider">
+                                <i class="fa fa-calendar-check-o" id="validation${i}"></i>
+                            </button>
                         </div>
                     </div>`;
                     tacheListe.appendChild(tacheDiv);
@@ -106,15 +119,14 @@ function renduJSON(json) {
                 } 
                 
                 if (json[i].statut == 1) {
-
                     let tacheDiv = document.createElement("div");
                     tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded fini`;
                     tacheDiv.innerHTML = ` 
-                    <div class="row">
+                    <div class="row pr-3">
                         <div class="col">
                             <p class="mb-1">${json[i].tache}</p>
                         </div>
-                        <div class="col-1">
+                        <div class="col-1 d-flex align-items-center">
                             <i class="fa fa-check-circle trash-color"></i>
                         </div>
                     </div>`;
@@ -126,7 +138,8 @@ function renduJSON(json) {
             let btnValidation = document.querySelector(`#validation${i}`);
             if (btnValidation != null){
                 btnValidation.addEventListener('click', (event) => {
-                    event.stopPropagation();
+
+                    console.log("click");
                     if (confirm("Avez-vous terminer votre tache ?")) {
                         validationTache(json[i].id);
                     }
@@ -176,6 +189,12 @@ function recupDataModal(tache){
                 for (let j = 0; j < reponse.users.length; j++) {
 
                     // On crée les options du sélect
+                    let utilisateurs = document.createElement('option');
+                    utilisateurs.setAttribute('selected', true);
+                    utilisateurs.value = "";
+                    utilisateurs.textContent = "Choisir un utilisateur";
+                    listeUtilisateur.appendChild(utilisateurs);
+
                     if (reponse.tache[0].attribuer == reponse.users[j].idUser) {
                         let utilisateurs = document.createElement('option');
                         utilisateurs.setAttribute('selected', true);
