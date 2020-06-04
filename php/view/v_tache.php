@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION['connecte'])){
+if(!isset($_SESSION['connecté'])){
     header("location: index.php?deconnexion");
     exit();
 }
