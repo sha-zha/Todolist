@@ -31,3 +31,12 @@ function update_token_user($pdo, $email, $token){
             'token_User'          => $token
         ));
     }
+ 
+
+function id_user_by_mail($pdo, $email){
+    $stmt = $pdo->prepare("SELECT id_User FROM users WHERE email_User = :email_User");
+    $stmt->execute(array('email_User' => $email));
+    $result = $stmt->fetchAll();
+
+    return $result;
+}
