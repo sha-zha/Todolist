@@ -13,7 +13,7 @@ function message(mesg) {
             mesg.classList.remove("invisible");
             mesg.classList.remove('alert','alert-success');
             mesg.classList.add("mt-3");
-            mesg.classList.add('alert','alert-danger',);
+            mesg.classList.add('alert','alert-danger');
             break;
         case "KO-insc":
             mesg.innerHTML = "Pseudo ou email existant";
