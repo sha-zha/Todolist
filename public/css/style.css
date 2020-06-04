@@ -5,6 +5,11 @@
 	background-color:  #ffff!important;
 }
 
+.fini{
+	border: 1px solid  #2AA198!important; 
+	background-color:  #ffff!important;
+}
+
 .trash-color{
 	color:#FF0000;
 }
@@ -17,11 +22,14 @@
 	background-color: #fff!important;
 }
 
-.rond{
-	border-radius: 2em;
+.fa-check-circle{
+	color: #2AA198!important;
 }
 
-.fin{
-	border: 1px solid  #2AA198!important; 
-	background-color:  #ffff!important;
+.fas, .fa{
+	cursor: pointer;
+}
+
+.rond{
+	border-radius: 2em;
 }
