@@ -1,13 +1,39 @@
 /* Fluid Typography */
 @media (min-width: 320px) {
     html {
-      font-size: calc(0.9375rem + ((1vw - 3.2px) * 0.1875));
-      min-height: 0vw;
+        min-height: 0vw;
+    }
+    .card{
+        width: 80% !important
+    }
+    .links{
+        font-size: calc(0.5em + 1vw) !important;
     }
 }
-  @media (min-width: 1920px) {
-    html {
-      font-size: 18px;
+
+@media (min-width: 576px) {
+    .card{
+        width: 80% !important
+    }
+}
+
+@media (min-width: 768px) {
+    .card{
+        width: 80% !important
+    }
+}
+
+@media (min-width: 992px) {
+    .card{
+        width: 60% !important
+    }
+
+}
+
+@media (min-width: 1200px) {
+    font-size: 14px;
+    .card{
+        width: 40% !important
     }
 }
 
@@ -19,10 +45,9 @@ html,body{
     align-content: center;
 }
 .card{
-    height: auto;
+    height: 370px;
     margin-top: auto;
     margin-bottom: auto;
-    width: 400px;
     background-color: #479CD9!important;
  }
 .card-header{
@@ -32,6 +57,9 @@ html,body{
 .card-header h3{
     color: #FFF;
     text-align: center;
+}
+.card-body{
+    overflow: hidden;
 }
 .card-footer{
     background-color: #479CD9!important;
