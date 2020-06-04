@@ -11,6 +11,7 @@ let tacheModifier = document.querySelector('#tacheModifier');
 var messageModalAdd = document.querySelector('#warningModal');
 var messageModalMod = document.querySelector('#warningModalMod');
 var messageInterface = document.querySelector('#warning');
+var listeUtilisateur = document.querySelector('#listeUtilisateur');
 
 // Requete ajax
 let method;
@@ -41,18 +42,18 @@ function renduJSON(json) {
                             <p class="mb-1">${json[i].tache}</p>
                         </div>
                         <div class="col-1 d-flex align-items-center">
-                        <button id="modifier${i}" class="btn btn-outline-info" data-toggle="tooltip" data-placement="top" title="Modifier">
+                        <button id="modifier${i}" class="btn btn-outline-info btnAction" data-toggle="tooltip" data-placement="top" title="Modifier">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
                             
                         </div>
                         <div class="col-1 d-flex align-items-center">
-                            <button id="validation${i}" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Valider">
+                            <button id="validation${i}" class="btn btn-outline-success btnAction" data-toggle="tooltip" data-placement="top" title="Valider">
                                 <i class="fa fa-calendar-check-o"></i>
                             </button>
                         </div>
                         <div class="col-1 d-flex align-items-center">
-                            <button id="supprimer${i}" class="btn btn-outline-danger" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                            <button id="supprimer${i}" class="btn btn-outline-danger btnAction" data-toggle="tooltip" data-placement="top" title="Supprimer">
                                  <i class="fas fa-trash-alt"></i>
                             </button>
                         </div>
@@ -109,7 +110,7 @@ function renduJSON(json) {
                             <p class="mb-1">${json[i].tache}</p>
                         </div>
                         <div class="col-1 d-flex align-items-center">
-                            <button id="validation${i}" class="btn btn-outline-success" data-toggle="tooltip" data-placement="top" title="Valider">
+                            <button id="validation${i}" class="btn btn-outline-success btnAction" data-toggle="tooltip" data-placement="top" title="Valider">
                                 <i class="fa fa-calendar-check-o" id="validation${i}"></i>
                             </button>
                         </div>
@@ -138,8 +139,6 @@ function renduJSON(json) {
             let btnValidation = document.querySelector(`#validation${i}`);
             if (btnValidation != null) {
                 btnValidation.addEventListener('click', (event) => {
-
-                    console.log("click");
                     if (confirm("Avez-vous terminer votre tache ?")) {
                         validationTache(json[i].id);
                     }
@@ -186,7 +185,11 @@ function recupDataModal(tache) {
 
             // Fonctionnalités présent si on est le créateur de la tâche
             if (utilisateur == reponse.tache[0].maitre) {
+
                 for (let j = 0; j < reponse.users.length; j++) {
+
+                    // On réinitialise à chaque fois
+                    listeUtilisateur.innerHTML = "";
 
                     // On crée les options du sélect
                     let utilisateurs = document.createElement('option');
@@ -202,12 +205,13 @@ function recupDataModal(tache) {
                         utilisateurs.textContent = reponse.users[j].pseudo;
                         listeUtilisateur.appendChild(utilisateurs);
 
-                    } else {
+                    } else if(reponse.tache[0].maitre != reponse.users[j].idUser){
                         let utilisateurs = document.createElement('option');
                         utilisateurs.value = reponse.users[j].idUser;
                         utilisateurs.textContent = reponse.users[j].pseudo;
                         listeUtilisateur.appendChild(utilisateurs);
                     }
+                    
                 }
             } else {
                 labelModif.remove();

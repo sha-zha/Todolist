@@ -15,8 +15,8 @@ Adeline :
 
 
 Daryl : 
-* Front-end liste
-* Mise en relation avec backend (ajout / suppression / modification)
+* Mise en relation backend et frontend des tâches 
+* Ajustement minimal du front-end liste des tâches
 
 Thomas:
 * Back de la page connexion
