@@ -39,7 +39,6 @@
 	font-size: calc(0.5em + 0.6vw) !important;
 }
 
-
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {  
 	.card-header, .btnAjouter, .modal-title, #warningModal, #warning, #warningModalMod{
