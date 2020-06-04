@@ -1,5 +1,5 @@
 <?php
-if(!isset($_SESSION['connecté'])){
+if (!isset($_SESSION['connecté'])) {
     header("location: index.php?deconnexion");
     exit();
 }
@@ -36,7 +36,7 @@ if(!isset($_SESSION['connecté'])){
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 text-center">
-                    <button type="button" class="btn btn-success mt-5" data-toggle="modal" data-target="#modalAjouter">Ajouter</button>
+                    <button type="button" class="btn btn-success mt-5 btnAjouter" data-toggle="modal" data-target="#modalAjouter">Ajouter</button>
                 </div>
             </div>
         </div>
@@ -44,9 +44,9 @@ if(!isset($_SESSION['connecté'])){
         <div id="warning" class="alert w-50 mx-auto text-center"></div>
 
         <!-- Liste -->
-        <div class="container mt-3">
-            <div class="row">
-                <div class="col-sm-8 mx-auto">
+        <div class="container-fluid mt-3">
+            <div class="row no-gutters">
+                <div class="col-lg-8 col-sm-10 col-12 mx-auto">
                     <div class="card bg-info">
                         <div class="card-header text-white">Liste globale</div>
                         <div class="card-body bg-color">
@@ -63,7 +63,7 @@ if(!isset($_SESSION['connecté'])){
 
     <!--Modal ajouter -->
     <div class="modal fade" id="modalAjouter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content border border-info">
                 <div class="modal-header bg-info">
                     <h5 class="modal-title text-white" id="exampleModalLabel">Ajouter une tâche</h5>
@@ -78,7 +78,7 @@ if(!isset($_SESSION['connecté'])){
                     <form id="tacheFormAjout" method="POST" class="card bg-color">
                         <div class="form-group p-4">
                             <!-- champ dynamique suivant l'utilisateur -->
-                            <input type="hidden" name="utilisateur" id="utilisateur" value="<?php echo htmlspecialchars($_SESSION['id'])?>">
+                            <input type="hidden" name="utilisateur" id="utilisateur" value="<?php echo htmlspecialchars($_SESSION['id']) ?>">
 
                             <label for="tacheDescription" class="text-dark">Ajouter une tâche</label>
                             <input type="text" name="tacheDescription" id="tacheDescription" class="form-control tache" placeholder="Description de la tâche">
@@ -95,7 +95,7 @@ if(!isset($_SESSION['connecté'])){
 
     <!--Modal Modifier -->
     <div class="modal fade" id="modalMod" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-info">
                     <h5 class="modal-title text-white" id="ModalLabel"></h5>
