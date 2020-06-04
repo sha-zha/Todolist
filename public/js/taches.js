@@ -11,6 +11,7 @@ let tacheModifier = document.querySelector('#tacheModifier');
 var messageModalAdd = document.querySelector('#warningModal');
 var messageModalMod = document.querySelector('#warningModalMod');
 var messageInterface = document.querySelector('#warning');
+var listeUtilisateur = document.querySelector('#listeUtilisateur');
 
 // Requete ajax
 let method;
@@ -138,8 +139,6 @@ function renduJSON(json) {
             let btnValidation = document.querySelector(`#validation${i}`);
             if (btnValidation != null) {
                 btnValidation.addEventListener('click', (event) => {
-
-                    console.log("click");
                     if (confirm("Avez-vous terminer votre tache ?")) {
                         validationTache(json[i].id);
                     }
@@ -188,7 +187,7 @@ function recupDataModal(tache) {
             if (utilisateur == reponse.tache[0].maitre) {
 
                 listeUtilisateur.innerHTML = "";
-                
+
                 for (let j = 0; j < reponse.users.length; j++) {
 
                     // On crée les options du sélect
