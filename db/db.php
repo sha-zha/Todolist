@@ -23,7 +23,7 @@ $pdo->query(
     id_Task INTEGER PRIMARY KEY AUTOINCREMENT,
     task_Task VARCHAR(120) NOT NULL, 
     status_Task BOOLEAN DEFAULT 0, 
-    id_User_attribuer INT(3) NOT NULL, 
+    id_User_attribuer INT(3), 
     id_User_Creer INT(3) NOT NULL, 
     FOREIGN KEY (id_User_attribuer) REFERENCES User (id_User),
     FOREIGN KEY (id_User_Creer) REFERENCES User (id_User)
