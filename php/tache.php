@@ -10,21 +10,20 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST");
 
 // La variable session en porté global
-// $testSession = (int) dataPurgatory($_SESSION['id']);
+$testSession = (int) dataPurgatory($_SESSION['id']);
 
-// if($testSession != 0){
-//     $utilisateurID = (int) dataPurgatory($_SESSION['id']);
-// }
-$utilisateur1 = 1;
+if($testSession != 0){
+    $utilisateurID = (int) dataPurgatory($_SESSION['id']);
+}
 
 // Pour récupérer les taches attribuées et créer par notre utilisateur
 function lireDonnee(){
     require "../db/db.php";
-    global $utilisateur1;
+    global $utilisateurID;
 
     $reqLireDonnees = "SELECT * FROM Tasks WHERE id_User_attribuer = ? OR id_User_Creer = ?";
     $lireDonnee     = $pdo->prepare($reqLireDonnees);
-    $lireDonnee->execute(array($utilisateur1, $utilisateur1));
+    $lireDonnee->execute(array($utilisateurID, $utilisateurID));
 
     while($donnees = $lireDonnee->fetch()){
         $donneesTache[] = [
@@ -79,7 +78,7 @@ function ajouter(){
 // Fonction pour gérer le contenu dynamique du modal
 function modalData(){
     require "../db/db.php";
-    global $utilisateur1;
+    global $utilisateurID;
 
     $idTache = (int) dataPurgatory($_POST['tache']);
 
@@ -89,7 +88,7 @@ function modalData(){
         $reqTache->execute(array($idTache));
 
         $reqUser = $pdo->prepare("SELECT * FROM Users WHERE NOT id_User = ?");
-        $reqUser->execute(array($utilisateur1));
+        $reqUser->execute(array($utilisateurID));
 
         while($tache = $reqTache->fetch()){
             $donneesTache[] = [
@@ -178,7 +177,7 @@ function mettreAJour(){
 function supprimer(){
     
     require "../db/db.php";
-    global $utilisateur1;
+    global $utilisateurID;
     $idTache = (int) dataPurgatory($_POST['tache']);
 
     // On vérifie que l'id de la tâche est un int et différent de 0
@@ -191,7 +190,7 @@ function supprimer(){
         $idMaitreTask = $reqConfirmationSupp->fetch();
 
         // On vérifie que notre utilisateur possède les droits de supprimer la tâche
-        if($idMaitreTask['id_User_Creer'] == $utilisateur1){
+        if($idMaitreTask['id_User_Creer'] == $utilisateurID){
             $reqSuppression = "DELETE FROM Tasks WHERE id_Task = ?";
             $supp = $pdo->prepare($reqSuppression);
             $supp->execute(array($idTache));

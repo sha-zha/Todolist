@@ -9,7 +9,7 @@
         if($test){
             $token = @crypt(htmlspecialchars($_POST['email']), "");
             attributionToken($pdo, htmlspecialchars($_POST['email']), $token);
-            $_SESSION["connecté"] = true;
+            $_SESSION["connecte"] = true;
             $id = id_user_by_mail($pdo, htmlspecialchars($_POST['email']));
             $_SESSION["id"] = $id[0]["id_User"];
             $view = 'v_tache.php';

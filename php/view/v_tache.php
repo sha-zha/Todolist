@@ -1,8 +1,8 @@
 <?php
-// if(!isset($_SESSION['connect'])){
-//     header("location: ../php/deconnexion.php");
-//     exit();
-// }
+if(!isset($_SESSION['connecte'])){
+    header("location: index.php?deconnexion");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -78,7 +78,7 @@
                     <form id="tacheFormAjout" method="POST" class="card bg-color">
                         <div class="form-group p-4">
                             <!-- champ dynamique suivant l'utilisateur -->
-                            <input type="hidden" name="utilisateur" id="utilisateur" value="1">
+                            <input type="hidden" name="utilisateur" id="utilisateur" value="<?php echo htmlspecialchars($_SESSION['id'])?>">
 
                             <label for="tacheDescription" class="text-dark">Ajouter une tâche</label>
                             <input type="text" name="tacheDescription" id="tacheDescription" class="form-control tache" placeholder="Description de la tâche">
