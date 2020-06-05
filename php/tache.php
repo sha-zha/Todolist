@@ -94,6 +94,7 @@ if(isset($_SESSION['connecté'])){
         require "../db/db.php";
         global $utilisateurID;
 
+        $counter = 0;
         $idTache = (int) dataPurgatory($_POST['tache']);
 
         // On vérifie que l'id est bien un int
@@ -104,6 +105,15 @@ if(isset($_SESSION['connecté'])){
             $reqUser = $pdo->prepare("SELECT * FROM Users WHERE NOT id_User = ?");
             $reqUser->execute(array($utilisateurID));
 
+            $tabUtilisateur = [];
+
+            while ($user = $reqUser->fetch()) {
+                $tabUtilisateur[] = [
+                    "idUser" => $user['id_User'],
+                    "pseudo" => $user['pseudo_User']
+                ];
+            }
+
             while ($tache = $reqTache->fetch()) {
                 $donneesTache[] = [
                     "id"     => $tache['id_Task'],
@@ -111,13 +121,6 @@ if(isset($_SESSION['connecté'])){
                     "statut" => $tache['status_Task'],
                     "attribuer" => $tache['id_User_attribuer'],
                     "maitre" => $tache['id_User_Creer']
-                ];
-            }
-
-            while ($user = $reqUser->fetch()) {
-                $tabUtilisateur[] = [
-                    "idUser" => $user['id_User'],
-                    "pseudo" => $user['pseudo_User']
                 ];
             }
 
@@ -200,7 +203,6 @@ if(isset($_SESSION['connecté'])){
 
         echo json_encode($message);
         $pdo = null;
-        
     }
         
     // On supprime la tache 
