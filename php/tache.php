@@ -68,7 +68,7 @@ if(isset($_SESSION['connecté'])){
 
                     $message = [
                         'error' => false,
-                        'message' => 'La tâche a bien été ajouter !'
+                        'message' => 'La tâche a bien été ajoutée !'
                     ];
                 } else {
                     $message = [
@@ -159,7 +159,7 @@ if(isset($_SESSION['connecté'])){
 
                 $message = [
                     'success' => true,
-                    'message' => 'La tâche a bien été attribuer !'
+                    'message' => 'La tâche a bien été attribuée !'
                 ];
             } else {
                 $message = [
@@ -176,7 +176,7 @@ if(isset($_SESSION['connecté'])){
 
                 $message = [
                     'success' => true,
-                    'message' => 'La tâche a bien été modifié !'
+                    'message' => 'La tâche a bien été modifiée !'
                 ];
             }
         } else {
@@ -194,7 +194,7 @@ if(isset($_SESSION['connecté'])){
 
             $message = [
                 'success' => true,
-                'message' => 'La tâche a bien été modifié !'
+                'message' => 'La tâche a bien été modifiée !'
             ];
         }
 
@@ -226,7 +226,7 @@ if(isset($_SESSION['connecté'])){
 
                 $message = [
                     'success' => true,
-                    'message' => 'La tâche a bien été supprimer !'
+                    'message' => 'La tâche a bien été supprimée !'
                 ];
             } else {
                 $message = [
@@ -255,12 +255,12 @@ if(isset($_SESSION['connecté'])){
 
             $message = [
                 'success' => true,
-                'message' => 'La tâche a bien été valider !'
+                'message' => 'La tâche a bien été validée !'
             ];
         } else {
             $message = [
                 'success' => false,
-                'message' => 'Une erreur s\' produite lors de la validation !'
+                'message' => 'Une erreur s\'est produite lors de la validation !'
             ];
         }
 
