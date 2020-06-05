@@ -1,3 +1,5 @@
+
+// div ou le message s'affichera
 var msg = document.getElementById("messageAction");
 message(msg);
 
