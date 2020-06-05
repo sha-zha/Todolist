@@ -44,7 +44,6 @@ if(isset($_SESSION['connecté'])){
 
     // Fonction pour ajouter une tache
     function ajouter(){
-        // les données utile
         $tache          = dataPurgatory($_POST['tache']);
         $idUtilisateur  = (int) dataPurgatory($_POST['utilisateur']);
 
@@ -83,17 +82,14 @@ if(isset($_SESSION['connecté'])){
                 'message' => 'Votre tâche doit contenir au minimum un chiffre ou une lettre !'
             ];
         }
-
         echo json_encode($message);
         $pdo = null;
     };
-
 
     // Fonction pour gérer le contenu dynamique du modal
     function modalData(){
         require "../db/db.php";
         global $utilisateurID;
-
         $idTache = (int) dataPurgatory($_POST['tache']);
 
         // On vérifie que l'id est bien un int
@@ -103,7 +99,6 @@ if(isset($_SESSION['connecté'])){
 
             $reqUser = $pdo->prepare("SELECT * FROM Users WHERE NOT id_User = ?");
             $reqUser->execute(array($utilisateurID));
-
             $tabUtilisateur = [];
 
             while ($user = $reqUser->fetch()) {
@@ -133,12 +128,9 @@ if(isset($_SESSION['connecté'])){
         }
     }
 
-
     // Fonction pour mettre à jour une tache
     function mettreAJour(){
         require "../db/db.php";
-
-        // Les données utiles
         $idUtilisateur  = dataPurgatory($_POST['utilisateur']);
         $idTache        = (int) dataPurgatory($_POST['tache']);
         $description    = dataPurgatory($_POST['description']);
@@ -149,8 +141,6 @@ if(isset($_SESSION['connecté'])){
 
         // Si on à une description de renseigné
         if (!empty($description) && preg_match($pattern, $description)) {
-
-            // On converti l'id en int
             $idUtilisateur = (int) $idUtilisateur;
 
             // Dans le cas où nous avons un id utilisateur / tache -> donc une attribution
@@ -241,8 +231,7 @@ if(isset($_SESSION['connecté'])){
     };
 
     // Fonction pour valider la tache
-    function validationTache()
-    {
+    function validationTache(){
         require "../db/db.php";
         $idTache = (int) dataPurgatory($_POST['tache']);
 
@@ -264,7 +253,6 @@ if(isset($_SESSION['connecté'])){
                 'message' => 'Une erreur s\'est produite lors de la validation !'
             ];
         }
-
         echo json_encode($message);
         $pdo = null;
     }

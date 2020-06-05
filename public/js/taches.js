@@ -14,6 +14,10 @@ var messageModalMod     = document.querySelector('#warningModalMod');
 var messageInterface    = document.querySelector('#warning');
 var listeUtilisateur    = document.querySelector('#listeUtilisateur');
 
+// Pour récupérer les elements en réaction à la fermeture du modal
+let closeAdd = document.querySelector("#closeAdd");
+let closeMod = document.querySelector("#closeMod");
+
 // Requete ajax
 let method;
 let url = "php/tache.php";
@@ -27,7 +31,7 @@ window.onload = () =>{
     // Fonction pour récupérer les données
     function recupDonnees() {
         method = "GET";
-        req.open(method, url, true);
+        req.open(method, url);
         req.responseType = "json";
         req.send();
 
@@ -56,27 +60,27 @@ window.onload = () =>{
                         let tacheDiv = document.createElement("div");
                         tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded tache`;
                         tacheDiv.innerHTML = ` 
-                    <div class="row pr-3">
-                        <div class="col">
-                            <p class="mb-1">${json[i].tache}</p>
-                        </div>
-                        <div class="col-1 d-flex align-items-center">
-                        <button id="modifier${i}" class="btn btn-outline-info btnAction" data-toggle="tooltip" data-placement="top" title="Modifier">
-                            <i class="fas fa-pencil-alt"></i>
-                        </button>
-                            
-                        </div>
-                        <div class="col-1 d-flex align-items-center">
-                            <button id="validation${i}" class="btn btn-outline-success btnAction" data-toggle="tooltip" data-placement="top" title="Valider">
-                                <i class="fa fa-calendar-check-o"></i>
-                            </button>
-                        </div>
-                        <div class="col-1 d-flex align-items-center">
-                            <button id="supprimer${i}" class="btn btn-outline-danger btnAction" data-toggle="tooltip" data-placement="top" title="Supprimer">
-                                 <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>`;
+                            <div class="row pr-3">
+                                <div class="col">
+                                    <p class="mb-1">${json[i].tache}</p>
+                                </div>
+                                <div class="col-1 d-flex align-items-center">
+                                <button id="modifier${i}" class="btn btn-outline-info btnAction" data-toggle="tooltip" data-placement="top" title="Modifier">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                    
+                                </div>
+                                <div class="col-1 d-flex align-items-center">
+                                    <button id="validation${i}" class="btn btn-outline-success btnAction" data-toggle="tooltip" data-placement="top" title="Valider">
+                                        <i class="fa fa-calendar-check-o"></i>
+                                    </button>
+                                </div>
+                                <div class="col-1 d-flex align-items-center">
+                                    <button id="supprimer${i}" class="btn btn-outline-danger btnAction" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>`;
                         tacheListe.appendChild(tacheDiv);
                     }
 
@@ -84,14 +88,14 @@ window.onload = () =>{
                         let tacheDiv = document.createElement("div");
                         tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded fini`;
                         tacheDiv.innerHTML = ` 
-                    <div class="row pr-3">
-                        <div class="col">
-                            <p class="mb-1">${json[i].tache}</p>
-                        </div>
-                        <div class="col-1 d-flex align-items-center">
-                            <i class="fa fa-check-circle trash-color"></i>
-                        </div>
-                    </div>`;
+                            <div class="row pr-3">
+                                <div class="col">
+                                    <p class="mb-1">${json[i].tache}</p>
+                                </div>
+                                <div class="col-1 d-flex align-items-center">
+                                    <i class="fa fa-check-circle trash-color"></i>
+                                </div>
+                            </div>`;
                         tacheListe.appendChild(tacheDiv);
                     }
 
@@ -100,6 +104,7 @@ window.onload = () =>{
                     if (btnModifier != null) {
                         btnModifier.addEventListener('click', (event) => {
                             listeUtilisateur.innerHTML = "";
+                            affichage.supprimerModalModMessage();
                             recupDataModal(json[i].id);
                             $('#modalMod').modal('toggle');
                         });
@@ -117,22 +122,21 @@ window.onload = () =>{
                 }
 
                 if (json[i].attribuer == utilisateur) {
-
                     // Pour la création node de manière dynamique si on a des tâches attribuer
                     if (json[i].statut == 0) {
                         let tacheDiv = document.createElement("div");
                         tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded tache`;
                         tacheDiv.innerHTML = ` 
-                    <div class="row pr-3">
-                        <div class="col">
-                            <p class="mb-1">${json[i].tache}</p>
-                        </div>
-                        <div class="col-1 d-flex align-items-center">
-                            <button id="validation${i}" class="btn btn-outline-success btnAction" data-toggle="tooltip" data-placement="top" title="Valider">
-                                <i class="fa fa-calendar-check-o" id="validation${i}"></i>
-                            </button>
-                        </div>
-                    </div>`;
+                            <div class="row pr-3">
+                                <div class="col">
+                                    <p class="mb-1">${json[i].tache}</p>
+                                </div>
+                                <div class="col-1 d-flex align-items-center">
+                                    <button id="validation${i}" class="btn btn-outline-success btnAction" data-toggle="tooltip" data-placement="top" title="Valider">
+                                        <i class="fa fa-calendar-check-o" id="validation${i}"></i>
+                                    </button>
+                                </div>
+                            </div>`;
                         tacheListe.appendChild(tacheDiv);
                     }
 
@@ -140,14 +144,14 @@ window.onload = () =>{
                         let tacheDiv = document.createElement("div");
                         tacheDiv.className = `list-group-item  my-2 flex-column align-items-start rounded fini`;
                         tacheDiv.innerHTML = ` 
-                    <div class="row pr-3">
-                        <div class="col">
-                            <p class="mb-1">${json[i].tache}</p>
-                        </div>
-                        <div class="col-1 d-flex align-items-center">
-                            <i class="fa fa-check-circle trash-color"></i>
-                        </div>
-                    </div>`;
+                            <div class="row pr-3">
+                                <div class="col">
+                                    <p class="mb-1">${json[i].tache}</p>
+                                </div>
+                                <div class="col-1 d-flex align-items-center">
+                                    <i class="fa fa-check-circle trash-color"></i>
+                                </div>
+                            </div>`;
                         tacheListe.appendChild(tacheDiv);
                     }
                 }
@@ -173,10 +177,9 @@ window.onload = () =>{
 
     // Fonction pour gérer le contenu du modal de manière dynamique
     function recupDataModal(tache) {
-
         method = "POST";
         data = `tache=${tache}&act=modal`;
-        req.open(method, url, true);
+        req.open(method, url);
         req.setRequestHeader('Content-type', "application/x-www-form-urlencoded");
         req.responseType = "json";
         req.send(data);
@@ -196,17 +199,12 @@ window.onload = () =>{
                     let titre = reponse.tache[0].tache;
                     titreModal.textContent = `Tâche: ${titre}`;
                 }
-
-                // Cacher ou afficher la possibilité d'attribuer des tâches
                 let labelModif = document.querySelector('#labelModif');
 
                 // Fonctionnalités présent si on est le créateur de la tâche
                 if (utilisateur == reponse.tache[0].maitre) {
-
                     if (reponse.users.length != 0){
                         for (let j = 0; j < reponse.users.length; j++) {
-
-                            // On réinitialise à chaque fois
                             listeUtilisateur.innerHTML = "";
 
                             // On crée les options du sélect
@@ -225,13 +223,9 @@ window.onload = () =>{
                             }
                         }
                     }else{
-                        // On réinitialise à chaque fois
                         listeUtilisateur.innerHTML = "";
-
-                        // On crée les options du sélect
                         affichage.creerOptionPreSelect("", "Choisir un utilisateur");
                     }
-
                 } else {
                     labelModif.remove();
                     listeUtilisateur.remove();
@@ -242,8 +236,7 @@ window.onload = () =>{
                     event.preventDefault();
                     method = "POST";
                     data = `utilisateur=${listeUtilisateur.value}&tache=${reponse.tache[0].id}&description=${tache2.value}&act=update`;
-
-                    req.open(method, url, true);
+                    req.open(method, url);
                     req.responseType = "json";
                     req.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
                     req.send(data);
@@ -251,12 +244,10 @@ window.onload = () =>{
                     req.onload = () => {
                         if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
                             let reponse = req.response;
-
                             if (reponse.success) {
                                 // Si on a pas d'erreur
                                 affichage.messageModalModSuccess(reponse.message);
                                 recupDonnees();
-
                             } else {
                                 // Si on a une erreur
                                 affichage.messageModalModErreur(reponse.message);
@@ -272,7 +263,7 @@ window.onload = () =>{
     function supprimeTache(tache) {
         method = "POST";
         data = `tache=${tache}&act=delete`;
-        req.open(method, url, true);
+        req.open(method, url);
         req.responseType = "json";
         req.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
         req.send(data);
@@ -280,17 +271,14 @@ window.onload = () =>{
         req.onload = () => {
             if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
                 let reponse = req.response;
-
                 if (reponse.success) {
                     // Si on n'a pas une erreur
                     affichage.messageInterfaceErreurSuccess(reponse.message);
                     recupDonnees();
-
                 } else {
                     // Si on a une d'erreur
                     affichage.messageInterfaceErreur(reponse.message);
                 }
-
                 // Supprimer le message inscrit sur l'interface après 5s
                 affichage.delaiMessageInterface();
             }
@@ -301,7 +289,7 @@ window.onload = () =>{
     function validationTache(tache) {
         method = "POST";
         data = `tache=${tache}&act=validation`;
-        req.open(method, url, true);
+        req.open(method, url);
         req.responseType = "json";
         req.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
         req.send(data);
@@ -309,24 +297,23 @@ window.onload = () =>{
         req.onload = () => {
             if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
                 let reponse = req.response;
-
                 if (reponse.success) {
                     // Si on n'a pas une erreur
                     affichage.messageInterfaceErreurSuccess(reponse.message);
                     recupDonnees();
-
                 } else {
                     // Si on a une d'erreur
                     affichage.messageInterfaceErreur();
                 }
-
                 affichage.delaiMessageInterface();
             }
         }
     }
 
+
     // Pour créer une tâche
     tacheFormAjout.addEventListener("submit", evnt => {
+        affichage.supprimerModalModMessage();
         evnt.preventDefault();
         method = "POST";
 
@@ -335,8 +322,7 @@ window.onload = () =>{
 
         // On envoie les données 
         data = `tache=${tache}&utilisateur=${utilisateur}&act=add`;
-
-        req.open(method, url, true);
+        req.open(method, url);
         req.responseType = "json";
         req.setRequestHeader('Content-type', "application/x-www-form-urlencoded");
         req.send(data);
@@ -344,7 +330,6 @@ window.onload = () =>{
         req.onload = () => {
             if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
                 let reponse = req.response;
-
                 if (reponse.error) {
                     // Si on a une erreur
                     affichage.messageModalAjoutErreur(reponse.message);
@@ -360,3 +345,16 @@ window.onload = () =>{
         }
     });
 }
+
+// Supprimer les messages à la fermeture des modales
+closeAdd.addEventListener('click', () =>{
+    if (!messageModalAdd.classList.contains("invisible")){
+        affichage.supprimerModalAjoutMessage();
+    }
+});
+
+closeMod.addEventListener('click', () => {
+    if(!messageModalMod.classList.contains('invisible')){
+        affichage.supprimerModalModMessage();
+    }
+});

@@ -67,8 +67,8 @@ if (!isset($_SESSION['connecté'])) {
             <div class="modal-content border border-info">
                 <div class="modal-header bg-info">
                     <h5 class="modal-title text-white" id="exampleModalLabel">Ajouter une tâche</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" id="closeAdd">&times;</span>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="closeAdd">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body bg-white">
@@ -99,8 +99,8 @@ if (!isset($_SESSION['connecté'])) {
             <div class="modal-content">
                 <div class="modal-header bg-info">
                     <h5 class="modal-title text-white" id="ModalLabel"></h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true" id="closeMod">&times;</span>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" id="closeMod">
+                        <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body bg-white">

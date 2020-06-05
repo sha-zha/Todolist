@@ -12,14 +12,6 @@ export function messageModalAjoutSuccess(message){
     messageModalAdd.classList.add("mb-3");
     messageModalAdd.classList.add('alert-success');
     messageModalAdd.textContent = message;
-
-    let timer = setTimeout(() => {
-        messageModalAdd.innerHTML = "";
-        messageModalAdd.classList.add("invisible");
-        messageModalAdd.classList.remove("mb-3");
-        messageModalAdd.classList.remove('alert-danger');
-        messageModalAdd.classList.remove('alert-success');
-    }, 3000);
 } 
 
 // Pour afficher un message d'échec sur le modal d'ajout
@@ -29,14 +21,14 @@ export function messageModalAjoutErreur(message) {
     messageModalAdd.classList.add("mb-3");
     messageModalAdd.classList.add('alert-danger');
     messageModalAdd.textContent = message;
+}
 
-    let timer = setTimeout(() => {
-        messageModalAdd.innerHTML = "";
-        messageModalAdd.classList.add("invisible");
-        messageModalAdd.classList.remove("mb-3");
-        messageModalAdd.classList.remove('alert-danger');
-        messageModalAdd.classList.remove('alert-success');
-    }, 3000);
+export function supprimerModalAjoutMessage(){
+    messageModalAdd.innerHTML = "";
+    messageModalAdd.classList.add("invisible");
+    messageModalAdd.classList.remove("mb-3");
+    messageModalAdd.classList.remove('alert-danger');
+    messageModalAdd.classList.remove('alert-success');
 }
 
 /* --------------------------------------------------------------- */
@@ -51,14 +43,6 @@ export function messageModalModSuccess(message) {
     messageModalMod.classList.add("mb-3");
     messageModalMod.classList.add('alert-success');
     messageModalMod.textContent = message;
-
-    let timer = setTimeout(() => {
-        messageModalMod.innerHTML = "";
-        messageModalMod.classList.add("invisible");
-        messageModalMod.classList.remove("mb-3");
-        messageModalMod.classList.remove('alert-danger');
-        messageModalMod.classList.remove('alert-success');
-    }, 3000);
 }
 
 // Pour afficher un message d'erreur sur le modal modifier
@@ -69,14 +53,6 @@ export function messageModalModErreur(message) {
     messageModalMod.classList.add("mb-3");
     messageModalMod.classList.add('alert-danger');
     messageModalMod.textContent = message;
-
-    let timer = setTimeout(() => {
-        messageModalMod.innerHTML = "";
-        messageModalMod.classList.add("invisible");
-        messageModalMod.classList.remove("mb-3");
-        messageModalMod.classList.remove('alert-danger');
-        messageModalMod.classList.remove('alert-success');
-    }, 3000);
 }
 
 // Pour la création des options du modal modifier
@@ -93,6 +69,14 @@ export function creerOption(valeur, text) {
     utilisateurs.value = valeur;
     utilisateurs.textContent = text;
     listeUtilisateur.appendChild(utilisateurs);
+}
+
+export function supprimerModalModMessage(){
+    messageModalMod.innerHTML = "";
+    messageModalMod.classList.add("invisible");
+    messageModalMod.classList.remove("mb-3");
+    messageModalMod.classList.remove('alert-danger');
+    messageModalMod.classList.remove('alert-success');
 }
 
 /* --------------------------------------------------------------- */

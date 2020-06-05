@@ -1,8 +1,6 @@
-
 // div ou le message s'affichera
 var msg = document.getElementById("messageAction");
 message(msg);
-
 
 function obtenirParametre(sVar) {
     return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(sVar).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
