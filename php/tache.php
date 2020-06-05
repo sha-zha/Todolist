@@ -94,7 +94,6 @@ if(isset($_SESSION['connecté'])){
         require "../db/db.php";
         global $utilisateurID;
 
-        $counter = 0;
         $idTache = (int) dataPurgatory($_POST['tache']);
 
         // On vérifie que l'id est bien un int
