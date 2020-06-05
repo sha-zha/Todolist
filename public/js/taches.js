@@ -202,26 +202,36 @@ window.onload = () =>{
 
                 // Fonctionnalités présent si on est le créateur de la tâche
                 if (utilisateur == reponse.tache[0].maitre) {
-                    for (let j = 0; j < reponse.users.length; j++) {
 
+                    if (reponse.users.length != 0){
+                        for (let j = 0; j < reponse.users.length; j++) {
+
+                            // On réinitialise à chaque fois
+                            listeUtilisateur.innerHTML = "";
+
+                            // On crée les options du sélect
+                            affichage.creerOptionPreSelect("", "Choisir un utilisateur");
+
+                            // Pour enlever une attribution
+                            affichage.creerOption("reinit", "Remettre à zéro");
+
+                            if (reponse.tache[0].attribuer == reponse.users[j].idUser) {
+                                // Si notre utilisateur a déjà attribuer la tâche à quelqu'un
+                                affichage.creerOptionPreSelect(reponse.users[j].idUser, reponse.users[j].pseudo);
+
+                            } else if (reponse.tache[0].maitre != reponse.users[j].idUser) {
+                                // Avoir les options des utilisateurs en enlevant dans la liste le créateur de la tache
+                                affichage.creerOption(reponse.users[j].idUser, reponse.users[j].pseudo);
+                            }
+                        }
+                    }else{
                         // On réinitialise à chaque fois
                         listeUtilisateur.innerHTML = "";
 
                         // On crée les options du sélect
                         affichage.creerOptionPreSelect("", "Choisir un utilisateur");
-                
-                        // Pour enlever une attribution
-                        affichage.creerOption("reinit", "Remettre à zéro");
-     
-                        if (reponse.tache[0].attribuer == reponse.users[j].idUser) {
-                            // Si notre utilisateur a déjà attribuer la tâche à quelqu'un
-                            affichage.creerOptionPreSelect(reponse.users[j].idUser, reponse.users[j].pseudo);
-
-                        } else if (reponse.tache[0].maitre != reponse.users[j].idUser) {
-                            // Avoir les options des utilisateurs en enlevant dans la liste le créateur de la tache
-                            affichage.creerOption(reponse.users[j].idUser, reponse.users[j].pseudo);
-                        }
                     }
+
                 } else {
                     labelModif.remove();
                     listeUtilisateur.remove();
