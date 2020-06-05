@@ -109,7 +109,7 @@ window.onload = () =>{
                     let btnSupprimer = document.querySelector(`#supprimer${i}`);
                     if (btnSupprimer != null) {
                         btnSupprimer.addEventListener("click", (event) => {
-                            if (confirm(`Voulez-vous vraiment supprimer la tache : ${json[i].tache}`)) {
+                            if (confirm(`Voulez-vous vraiment supprimer la tâche : ${json[i].tache}`)) {
                                 supprimeTache(json[i].id);
                             }
                         });
@@ -156,7 +156,7 @@ window.onload = () =>{
                 let btnValidation = document.querySelector(`#validation${i}`);
                 if (btnValidation != null) {
                     btnValidation.addEventListener('click', (event) => {
-                        if (confirm("Avez-vous terminer votre tache ?")) {
+                        if (confirm("Avez-vous terminé votre tache ?")) {
                             validationTache(json[i].id);
                         }
                     });

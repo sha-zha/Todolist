@@ -45,7 +45,7 @@ html,body{
     align-content: center;
 }
 .card{
-    height: 370px;
+    height: auto;
     margin-top: auto;
     margin-bottom: auto;
     background-color: #479CD9!important;
