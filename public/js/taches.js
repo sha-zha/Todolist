@@ -28,7 +28,9 @@ let data;
 let utilisateur = document.querySelector("#utilisateur").value;
 
 window.onload = () =>{
-    // Fonction pour récupérer les données
+    /**
+     * Fonction pour récupérer les données et envoyer en traitement
+     */
     function recupDonnees() {
         method = "GET";
         req.open(method, url);
@@ -43,15 +45,17 @@ window.onload = () =>{
         }
     }
 
-    // Récupérer les données présent en base de données
     recupDonnees();
 
-    // Fonction pour le rendu de notre JSON
+    /**
+     * Fonction pour faire du traitement sur le JSON
+     *
+     * Cette fonction permet d'avoir un front-end dynamique
+     * @param {object} json
+     */
     function renduJSON(json) {
-        // On regarde si le json contient des données
         if (json != null) {
             tacheListe.innerHTML = "";
-
             for (let i = 0; i < json.length; i++) {
 
                 // Pour la création node de manière dynamique si on est celui qui a créer
@@ -175,7 +179,11 @@ window.onload = () =>{
         }
     }
 
-    // Fonction pour gérer le contenu du modal de manière dynamique
+    // Fonction 
+    /**
+     * Gérer dynamiquement le contenu du modal suivant l'id de la tâche
+     * @param {number} tache 
+     */
     function recupDataModal(tache) {
         method = "POST";
         data = `tache=${tache}&act=modal`;
@@ -186,7 +194,6 @@ window.onload = () =>{
 
         req.onload = () => {
             if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
-                // Contenu du modal dynamique
                 let reponse = req.response;
                 var titreModal = document.querySelector("#ModalLabel");
                 tache2.value = reponse.tache[0].tache;
@@ -206,11 +213,7 @@ window.onload = () =>{
                     if (reponse.users.length != 0){
                         for (let j = 0; j < reponse.users.length; j++) {
                             listeUtilisateur.innerHTML = "";
-
-                            // On crée les options du sélect
                             affichage.creerOptionPreSelect("", "Choisir un utilisateur");
-
-                            // Pour enlever une attribution
                             affichage.creerOption("reinit", "Remettre à zéro");
 
                             if (reponse.tache[0].attribuer == reponse.users[j].idUser) {
@@ -245,11 +248,9 @@ window.onload = () =>{
                         if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
                             let reponse = req.response;
                             if (reponse.success) {
-                                // Si on a pas d'erreur
                                 affichage.messageModalModSuccess(reponse.message);
                                 recupDonnees();
                             } else {
-                                // Si on a une erreur
                                 affichage.messageModalModErreur(reponse.message);
                             }
                         }
@@ -279,10 +280,8 @@ window.onload = () =>{
             if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
                 let reponse = req.response;
                 if (reponse.error) {
-                    // Si on a une erreur
                     affichage.messageModalAjoutErreur(reponse.message);
                 } else {
-                    // Si on a pas d'erreur
                     affichage.messageModalAjoutSuccess(reponse.message);
                     recupDonnees();
                     tacheFormAjout.reset();
@@ -293,7 +292,10 @@ window.onload = () =>{
         }
     });
 
-    //Fonction pour valider la tache
+    /**
+     * Fonction pour valider la tache de manière asynchrone
+     * @param {number} tache 
+     */
     function validationTache(tache) {
         method = "POST";
         data = `tache=${tache}&act=validation`;
@@ -318,7 +320,10 @@ window.onload = () =>{
         }
     }
 
-    // Fonction pour supprimer une tâche
+    /**
+     * Fonction pour supprimer une tâche de manière asynchrone
+     * @param {number} tache 
+     */
     function supprimeTache(tache) {
         method = "POST";
         data = `tache=${tache}&act=delete`;
@@ -345,7 +350,6 @@ window.onload = () =>{
     }
 }
 
-// Supprimer les messages à la fermeture des modales
 closeAdd.addEventListener('click', () =>{
     if (!messageModalAdd.classList.contains("invisible")){
         affichage.supprimerModalAjoutMessage();

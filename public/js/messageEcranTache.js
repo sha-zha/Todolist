@@ -1,10 +1,11 @@
 import { messageModalAdd, messageModalMod, messageInterface } from "./taches.js";
 
-/* --------------------------------------------------------------- */
-// Pour le modal ajouter
-/* --------------------------------------------------------------- */
-
-// Pour afficher un message de success sur le modal d'ajout
+/**
+ * Fonction pour l'affichage d'un message de succès
+ * 
+ * On permet ici d'avoir un message sur le modal ajout de manière asynchrone.
+ * @param {string} message 
+ */
 export function messageModalAjoutSuccess(message){
     messageModalAdd.innerHTML = "";
     messageModalAdd.classList.remove("invisible");
@@ -14,7 +15,12 @@ export function messageModalAjoutSuccess(message){
     messageModalAdd.textContent = message;
 } 
 
-// Pour afficher un message d'échec sur le modal d'ajout
+/**
+ * Fonction pour l'affichage d'un message d'erreur
+ * 
+ * On permet ici d'avoir une message d'erreur sur le modal d'ajout
+ * @param {string} message 
+ */
 export function messageModalAjoutErreur(message) {
     messageModalAdd.innerHTML = "";
     messageModalAdd.classList.remove("invisible");
@@ -23,6 +29,9 @@ export function messageModalAjoutErreur(message) {
     messageModalAdd.textContent = message;
 }
 
+/**
+ * Fonction pour supprimer les messages afficher sur le modal d'ajout
+ */
 export function supprimerModalAjoutMessage(){
     messageModalAdd.innerHTML = "";
     messageModalAdd.classList.add("invisible");
@@ -31,11 +40,12 @@ export function supprimerModalAjoutMessage(){
     messageModalAdd.classList.remove('alert-success');
 }
 
-/* --------------------------------------------------------------- */
-// Pour le modal modifier
-/* --------------------------------------------------------------- */
-
-// Pour afficher un message de success sur le modal modifier
+/**
+ * Fonction pour l'affichage d'un message de succès
+ *
+ * On permet ici d'avoir un message sur le modal de modification de manière asynchrone.
+ * @param {string} message
+ */
 export function messageModalModSuccess(message) {
     messageModalMod.innerHTML = "";
     messageModalMod.classList.remove("invisible");
@@ -46,6 +56,12 @@ export function messageModalModSuccess(message) {
 }
 
 // Pour afficher un message d'erreur sur le modal modifier
+/**
+ * Fonction pour l'affichage d'un message d'erreur
+ *
+ * On permet ici d'avoir une message d'erreur sur le modal de modification
+ * @param {string} message
+ */
 export function messageModalModErreur(message) {
     messageModalMod.innerHTML = "";
     messageModalMod.classList.remove("invisible");
@@ -55,7 +71,11 @@ export function messageModalModErreur(message) {
     messageModalMod.textContent = message;
 }
 
-// Pour la création des options du modal modifier
+/**
+ * Pour la création des options du modal de modification qui sont pré-sélectionnées
+ * @param {string} valeur 
+ * @param {string} text 
+ */
 export function creerOptionPreSelect(valeur, text) {
     let utilisateurs = document.createElement('option');
     utilisateurs.setAttribute('selected', true);
@@ -64,6 +84,11 @@ export function creerOptionPreSelect(valeur, text) {
     listeUtilisateur.appendChild(utilisateurs);
 }
 
+/**
+ * Pour la création des options du modal de modification
+ * @param {string} valeur 
+ * @param {string} text 
+ */
 export function creerOption(valeur, text) {
     let utilisateurs = document.createElement('option');
     utilisateurs.value = valeur;
@@ -71,6 +96,9 @@ export function creerOption(valeur, text) {
     listeUtilisateur.appendChild(utilisateurs);
 }
 
+/**
+ * Pour supprimer les messages du modal de modification
+ */
 export function supprimerModalModMessage(){
     messageModalMod.innerHTML = "";
     messageModalMod.classList.add("invisible");
@@ -79,11 +107,10 @@ export function supprimerModalModMessage(){
     messageModalMod.classList.remove('alert-success');
 }
 
-/* --------------------------------------------------------------- */
-// Pour les messages sur l'interface 
-/* --------------------------------------------------------------- */
-
-// Pour afficher un message de success sur l'interface
+/**
+ * Pour afficher un message de success sur l'interface front où sont listées les tâches
+ * @param {string} message 
+ */
 export function messageInterfaceErreurSuccess(message) {
     messageInterface.innerHTML = "";
     messageInterface.classList.remove("invisible");
@@ -93,7 +120,10 @@ export function messageInterfaceErreurSuccess(message) {
     messageInterface.textContent = message
 }
 
-// Pour afficher un message d'erreur sur l'interface
+/**
+ * Pour afficher un message de erreur sur l'interface front où sont listées les tâches
+ * @param {string} message 
+ */
 export function messageInterfaceErreur(message){
     messageInterface.innerHTML = "";
     messageInterface.classList.remove("invisible");
@@ -103,7 +133,9 @@ export function messageInterfaceErreur(message){
     messageInterface.textContent = message;
 }
 
-// Pour avoir un délai d'affichage du message success / erreur
+/**
+ * Pour supprimer le message afficher sur l'interface front après 5s
+ */
 export function delaiMessageInterface() {
     let timer = setTimeout(() => {
         messageInterface.innerHTML = "";
