@@ -9,17 +9,30 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST");
 
-// La variable session en porté global
 $testSession = (int) dataPurgatory($_SESSION['id']);
 
 if($testSession != 0){
+    /** @var string $utilisateurID variable de session */
     $utilisateurID = (int) dataPurgatory($_SESSION['id']);
 }
 
-// Blocage de l'affichage si on a pas la variable session
+/**
+ * Pattern de regex afin d'éviter l'envoi d'un espace en tant que 1ere chaine de caractère.
+ * Ici il faut au moins avoir des chiffres et des lettres
+ * 
+ * @var string $pattern Regex
+ */
+$pattern = "/^[\s]*(?=.*[a-zA-Z0-9])/";
+
 if(isset($_SESSION['connecté'])){
 
-    // Pour récupérer les taches attribuées et créer par notre utilisateur
+    /**
+     * Pour récupérer les taches attribuées et créer par notre utilisateur
+     * 
+     * Nécessite d'avoir l'id de l'utilisateur en session. Ensuite, on récupère
+     * les tâches attribuées ou créées qui sont envoyer au format JSON au front-end
+     * @return array JSON 
+     */
     function lireDonnee(){
         require "../db/db.php";
         global $utilisateurID;
@@ -42,17 +55,18 @@ if(isset($_SESSION['connecté'])){
         $pdo = null;
     };
 
-    // Fonction pour ajouter une tache
+    /**
+     * Ajouter une tache à l'interface de notre utilisateur
+     * 
+     * @return array JSON ( contenant le message de succès ou d'erreur )
+     */
     function ajouter(){
+        global $pattern;
         $tache          = dataPurgatory($_POST['tache']);
         $idUtilisateur  = (int) dataPurgatory($_POST['utilisateur']);
 
-        // pattern de regex afin d'éviter l'envoi d'un espace en tant que chaine de caractère,
-        // Ici il faut au moins avoir des chiffres et des lettres
-        $pattern = "/^[\s]*(?=.*[a-zA-Z0-9])/";
-
-        // Si on à une description de renseigné
         if (!empty($tache) && preg_match($pattern, $tache)) {
+
             // On vérifie que l'id de l'utilisateur est bien un int
             if ($idUtilisateur != 0) {
                 $limiteCaractere = 120;
@@ -86,7 +100,18 @@ if(isset($_SESSION['connecté'])){
         $pdo = null;
     };
 
-    // Fonction pour gérer le contenu dynamique du modal
+    /**
+     * Générer dynamiquement le contenu du modal
+     * 
+     * Cette fonction a pour but de nous donner les informations du modal :
+     * 
+     * - Les informations de la tâche
+     * - La liste des utilisateurs pour une futur attribution 
+     *
+     * Ces informations sont ensuite envoyées à notre front end
+     * 
+     * @return array JSON
+     */
     function modalData(){
         require "../db/db.php";
         global $utilisateurID;
@@ -128,18 +153,25 @@ if(isset($_SESSION['connecté'])){
         }
     }
 
-    // Fonction pour mettre à jour une tache
+    /**
+     * Mettre à jour les informations concernant une tâche
+     * 
+     * On peut ici influencer sur les éléménts suivants :
+     * 
+     * - Modifier la description de la tâche
+     * - Attribuer la tâche à un utilisateur
+     * - Réinitialiser l'attribution de la tâche
+     *
+     * @return array JSON ( contenant le message de succès ou d'erreur )
+     */
     function mettreAJour(){
         require "../db/db.php";
+        global $pattern;
+
         $idUtilisateur  = dataPurgatory($_POST['utilisateur']);
         $idTache        = (int) dataPurgatory($_POST['tache']);
         $description    = dataPurgatory($_POST['description']);
 
-        // pattern de regex afin d'éviter l'envoi d'un espace en tant que chaine de caractère,
-        // Ici il faut au moins avoir des chiffres et des lettres
-        $pattern = "/^[\s]*(?=.*[a-zA-Z0-9])/";
-
-        // Si on à une description de renseigné
         if (!empty($description) && preg_match($pattern, $description)) {
             $idUtilisateur = (int) $idUtilisateur;
 
@@ -171,6 +203,7 @@ if(isset($_SESSION['connecté'])){
                     'message' => 'La tâche a bien été modifiée !'
                 ];
             }
+
         } else {
             $message = [
                 'success' => false,
@@ -193,14 +226,19 @@ if(isset($_SESSION['connecté'])){
         echo json_encode($message);
         $pdo = null;
     }
-        
-    // On supprime la tache 
+   
+    /**
+     * Supprime la tache
+     * 
+     * On supprime une tâche après avoir reçu l'id de celui-ci dans notre requête
+     *
+     * @return array JSON ( contenant le message de succès ou d'erreur )
+     */
     function supprimer(){
         require "../db/db.php";
         global $utilisateurID;
         $idTache = (int) dataPurgatory($_POST['tache']);
 
-        // On vérifie que l'id de la tâche est un int et différent de 0
         if ($idTache != 0) {
 
             // On récupère l'id de l'utilisateur qui a créer la tâche
@@ -230,12 +268,17 @@ if(isset($_SESSION['connecté'])){
         $pdo = null;
     };
 
-    // Fonction pour valider la tache
+    /**
+     * Fonction permettant de valider une tâche
+     * 
+     * Suivant l'id de la tâche, on va mettre à jour le statut est à true (1). Par défaut le statut est à false (0).
+     *
+     *  @return array JSON ( contenant le message de succès ou d'erreur )
+     */
     function validationTache(){
         require "../db/db.php";
         $idTache = (int) dataPurgatory($_POST['tache']);
 
-        // On vérifie que l'id de la tâche est un int et différent de 0
         if ($idTache != 0) {
 
             // On vérifie met a jour le statut de notre tache

@@ -259,58 +259,6 @@ window.onload = () =>{
         }
     }
 
-    // Fonction pour supprimer une tâche
-    function supprimeTache(tache) {
-        method = "POST";
-        data = `tache=${tache}&act=delete`;
-        req.open(method, url);
-        req.responseType = "json";
-        req.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
-        req.send(data);
-
-        req.onload = () => {
-            if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
-                let reponse = req.response;
-                if (reponse.success) {
-                    // Si on n'a pas une erreur
-                    affichage.messageInterfaceErreurSuccess(reponse.message);
-                    recupDonnees();
-                } else {
-                    // Si on a une d'erreur
-                    affichage.messageInterfaceErreur(reponse.message);
-                }
-                // Supprimer le message inscrit sur l'interface après 5s
-                affichage.delaiMessageInterface();
-            }
-        }
-    }
-
-    //Fonction pour valider la tache
-    function validationTache(tache) {
-        method = "POST";
-        data = `tache=${tache}&act=validation`;
-        req.open(method, url);
-        req.responseType = "json";
-        req.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
-        req.send(data);
-
-        req.onload = () => {
-            if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
-                let reponse = req.response;
-                if (reponse.success) {
-                    // Si on n'a pas une erreur
-                    affichage.messageInterfaceErreurSuccess(reponse.message);
-                    recupDonnees();
-                } else {
-                    // Si on a une d'erreur
-                    affichage.messageInterfaceErreur();
-                }
-                affichage.delaiMessageInterface();
-            }
-        }
-    }
-
-
     // Pour créer une tâche
     tacheFormAjout.addEventListener("submit", evnt => {
         affichage.supprimerModalModMessage();
@@ -344,6 +292,57 @@ window.onload = () =>{
             }
         }
     });
+
+    //Fonction pour valider la tache
+    function validationTache(tache) {
+        method = "POST";
+        data = `tache=${tache}&act=validation`;
+        req.open(method, url);
+        req.responseType = "json";
+        req.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
+        req.send(data);
+
+        req.onload = () => {
+            if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
+                let reponse = req.response;
+                if (reponse.success) {
+                    // Si on n'a pas une erreur
+                    affichage.messageInterfaceErreurSuccess(reponse.message);
+                    recupDonnees();
+                } else {
+                    // Si on a une d'erreur
+                    affichage.messageInterfaceErreur();
+                }
+                affichage.delaiMessageInterface();
+            }
+        }
+    }
+
+    // Fonction pour supprimer une tâche
+    function supprimeTache(tache) {
+        method = "POST";
+        data = `tache=${tache}&act=delete`;
+        req.open(method, url);
+        req.responseType = "json";
+        req.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
+        req.send(data);
+
+        req.onload = () => {
+            if (req.readyState === XMLHttpRequest.DONE && req.status === 200) {
+                let reponse = req.response;
+                if (reponse.success) {
+                    // Si on n'a pas une erreur
+                    affichage.messageInterfaceErreurSuccess(reponse.message);
+                    recupDonnees();
+                } else {
+                    // Si on a une d'erreur
+                    affichage.messageInterfaceErreur(reponse.message);
+                }
+                // Supprimer le message inscrit sur l'interface après 5s
+                affichage.delaiMessageInterface();
+            }
+        }
+    }
 }
 
 // Supprimer les messages à la fermeture des modales

@@ -1,11 +1,23 @@
 <?php
-    //on vérifie les logins dans la bdd
+    
+        /**
+     * Gestion de la connexion d'une utilisateur
+     *  
+     * Si les logins sont bon, on initialise la variable session, sinon KO
+     * 
+     * * Fonction vérification des identifiants          : verificationLogin($pdo, $email, $mdp);
+     * * Fonction attribuer un token à notre utilisateur : attributionToken($pdo, $email, $token);
+     * 
+     * @param string $_POST['email']
+     * @param string $_POST['mdp']
+     */
+
     require_once $dossier_model . 'm_users.php';
     $msg = '';
 
     if(isset($_POST['email'],$_POST['mdp'])){
         $test = verificationLogin($pdo, htmlspecialchars (htmlspecialchars($_POST['email'])), htmlspecialchars(md5($_POST['mdp'])) );
-        //si les logins sont bon, on initialise la variable session, sinon KO
+
         if($test){
             $token = @crypt(htmlspecialchars($_POST['email']), "");
             attributionToken($pdo, htmlspecialchars($_POST['email']), $token);
@@ -20,7 +32,15 @@
     }else{
         $view = 'v_connexion.php';
     }
-
+    
+    /**
+     * On vérifie que les informations de connexion existe
+     *
+     * @param  object $pdo
+     * @param  string $email
+     * @param  string $mdp
+     * @return bool
+     */
     function verificationLogin($pdo, $email, $mdp){
         $result = count_user_by_email_pass($pdo, $email, $mdp);
 
@@ -33,15 +53,16 @@
         return $result;
     }
 
-    //on attribue un token a l'utilisateur connecté
+    /**
+     * On attribue un token a l'utilisateur connecté  
+     *
+     * @param  object $pdo
+     * @param  string $email
+     * @param  string $token
+     * @return void
+     */
     function attributionToken($pdo, $email, $token){
         update_token_user($pdo, $email, $token);
 
     }
-
-    
-
-    
-
-
 ?>
